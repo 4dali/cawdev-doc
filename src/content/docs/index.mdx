@@ -1,0 +1,65 @@
+---
+title: cawdev
+description: The roadmap and changelog of many projects, reachable by the coding agents doing the work.
+template: splash
+hero:
+  tagline: |
+    A roadmap your agents can read, a changelog they can write, and a console
+    where you start a session on an entry and answer its questions while it works.
+  image:
+    file: ../../assets/logo.svg
+  actions:
+    - text: What cawdev is
+      link: /start/what-cawdev-is/
+      icon: right-arrow
+    - text: Source on GitHub
+      link: https://github.com/4dali/cawdev
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="One place, many projects" icon="open-book">
+    Every project is a named pointer at a git repository, with its own roadmap,
+    changelog and members. One deployment serves a whole team.
+  </Card>
+  <Card title="Agents get the same verbs you do" icon="puzzle">
+    The MCP server hands a coding agent the roadmap and changelog with tokens
+    you mint and can revoke — never more than you can do yourself.
+  </Card>
+  <Card title="Start a session from the console" icon="rocket">
+    Point an agent at a roadmap entry, watch it report, answer the question it
+    stopped on. Your repositories and your Claude login never leave your machine.
+  </Card>
+  <Card title="The markdown stays" icon="document">
+    <code>ROADMAP.md</code> and <code>CHANGELOG.md</code> are generated exports
+    that stay committed and readable. The database is the source of truth.
+  </Card>
+</CardGrid>
+
+## Where to start
+
+<CardGrid>
+  <LinkCard
+    title="I was just given an account"
+    description="Sign in, find your projects, and learn what the board is telling you."
+    href="/start/first-ten-minutes/"
+  />
+  <LinkCard
+    title="I want my agent to read the roadmap"
+    description="Mint a token and wire the MCP server into a repository."
+    href="/agents/mcp/"
+  />
+  <LinkCard
+    title="I want to run a session from the console"
+    description="Set up the runner daemon on your machine, then press Start."
+    href="/agents/runner/"
+  />
+  <LinkCard
+    title="I have to deploy this"
+    description="Compose, the first administrator, accounts, and who may create projects."
+    href="/admin/deploying/"
+  />
+</CardGrid>

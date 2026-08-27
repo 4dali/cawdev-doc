@@ -1,0 +1,85 @@
+---
+title: Deploying
+description: Compose, the environment, the first administrator, and why it refuses to boot.
+sidebar:
+  order: 1
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+## The stack
+
+| Piece | What it is |
+|---|---|
+| **API** | Spring Boot on Java 21, PostgreSQL 16, Flyway. Serves `/api`. |
+| **Console** | Angular, served by nginx, which also proxies `/api`. |
+| **Database** | PostgreSQL 16. |
+
+**One origin.** nginx serves the built console and proxies the API, so cookies
+never cross origins — which is where session bugs live.
+
+## Running it
+
+<Steps>
+
+1. Copy the environment template and fill it in:
+
+   ```sh
+   cp .env.example .env
+   ```
+
+   Every variable is listed there. Secrets are listed with **no value**, so a
+   missing one is obvious rather than silently defaulted.
+
+2. Bring the stack up:
+
+   ```sh
+   docker compose up --build
+   ```
+
+   Everything lands on `:8080`.
+
+</Steps>
+
+## It refuses to boot when misconfigured
+
+A setting with no safe default and no value makes the API **stop, naming the
+variable and where to set it** — rather than starting with a guess.
+
+:::note[Why]
+A platform that opens itself when misconfigured is worse than one that stops.
+The failure you want is the loud one at boot, not the quiet one three weeks
+later.
+:::
+
+## The first administrator
+
+There is no signup, so an empty user table is a platform nobody can get into.
+cawdev will not paper over that with a default account.
+
+On an **empty user table**, it requires:
+
+```ini
+CAWDEV_ADMIN_EMAIL=you@example.com
+CAWDEV_ADMIN_PASSWORD=…
+```
+
+and creates the first administrator from them. Without them it refuses to boot,
+naming both.
+
+Once the table has a user, **those variables are ignored entirely** — they
+bootstrap a deployment, they do not keep re-asserting an account.
+
+## The database
+
+Schema changes are **Flyway migrations only**; automatic schema generation is
+off, permanently. The database is the one thing a rollback cannot fix.
+
+Back up the Postgres volume like you would any other production database. The
+roadmap and changelog exports are readable copies, not backups — they do not
+carry users, memberships, tokens, or run history.
+
+## Upgrading
+
+Migrations run at boot. Take the usual precaution of a database backup first,
+then rebuild and restart the stack.

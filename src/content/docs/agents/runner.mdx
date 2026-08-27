@@ -1,0 +1,137 @@
+---
+title: The runner daemon
+description: The piece on your machine that holds the repositories and the CLI login — so the platform does not.
+sidebar:
+  order: 3
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+The runner is what makes [starting a session from the console](/console/runs/)
+possible. It lives on **your** machine, holds the repositories and the Claude
+Code login, and connects **outbound** — so there is no inbound port, and NAT and
+firewalls are nobody's problem.
+
+Plain Node, zero dependencies. You are about to let it spawn agent sessions
+against your working copies; it should be a file you can read first.
+
+## Setting it up
+
+<Steps>
+
+1. Mint a [token](/agents/tokens/) with **`runner:operate`** on each project
+   this machine should serve. Revoking that token stops the machine.
+
+2. Write a config file:
+
+   ```json
+   {
+     "url": "https://cawdev.example.com",
+     "name": "my-laptop",
+     "projects": {
+       "my-project": "/Users/you/code/my-project",
+       "other-project": "/Users/you/code/other-project"
+     }
+   }
+   ```
+
+3. Run it:
+
+   ```sh
+   CAWDEV_TOKEN=cawd_… node tools/runner/runner.mjs --config runner.config.json
+   ```
+
+</Steps>
+
+The **name** is how you recognise it in the console. Registering is idempotent
+by (owner, name), so restarting the daemon gives you the same runner rather than
+a third entry in the list.
+
+## What it does with a run
+
+<Steps>
+
+1. **Claims it.** The claim response carries the run's own short-lived `cawdr_`
+   token and the project's default branch. The runner never touches the project
+   API, which is session-only.
+
+2. **Prepares the working copy.** Fetch, then branch off the default.
+
+3. **Spawns the agent** in that directory, in its own process group, with the
+   run token in its environment and a generated `.mcp.json` pointing at
+   cawdev's MCP server.
+
+4. **Reports the lifecycle back**, and ends the run if the session dies without
+   saying anything — rather than leaving it `RUNNING` forever.
+
+</Steps>
+
+## Two refusals, both deliberate
+
+**A dirty working copy.** It fails the run naming the files. An agent let loose
+in a checkout with uncommitted work will at best confuse itself, and at worst
+commit somebody's half-finished thoughts.
+
+**A second run in the same working copy.** Runs share a checkout, so a second
+session would fight the first. The rest queue.
+
+## Your credentials stay yours
+
+- The platform holds **no** Claude account and no API key. The spawned session
+  authenticates the same way your terminal does, from the machine it runs on.
+- Your own `cawd_` token **never reaches the child process**. It gets a
+  `cawdr_` token bound to one run, expiring with it, carrying scopes on one
+  project.
+- The MCP config is generated into a temporary directory per run and thrown
+  away. Nothing is written into your repository.
+
+## Permissions
+
+A spawned agent **has no terminal**, so anything that stops to ask a human for
+permission stops forever. The defaults reflect that:
+
+| Flag | Why |
+|---|---|
+| `--permission-mode acceptEdits` | Lets it write files without asking |
+| `--allowedTools mcp__cawdev__…` | **Without this the entire loop is unreachable** — no reading the task, no moving the entry, no reporting, no asking |
+| `Bash(git *)` | The prompt tells it to commit its work, so the default has to allow that |
+
+**Nothing else runs.** A task needing tests or a build will stall waiting for
+permission that never comes, so add what that project needs. On a machine
+dedicated to this, `bypassPermissions` covers everything — but that is a real
+decision about what an unattended agent may do in your checkout, and it should
+be yours rather than one you inherit without noticing.
+
+## Trying it for free
+
+`stub-agent.mjs` stands in for the real CLI. It is spawned the same way, talks
+to the platform through the same API, and follows a fixed script instead of
+thinking — which is exactly what you want when testing the plumbing.
+
+```sh
+CAWDEV_STUB_SCRIPT=ask-then-finish \
+CAWDEV_TOKEN=cawd_… \
+  node tools/runner/runner.mjs --config runner.config.json
+```
+
+Point `agentCommand` at it by **absolute path**, with no `agentArgs`:
+
+```json
+{ "agentCommand": "/…/cawdev/tools/runner/stub-agent.mjs", "agentArgs": [] }
+```
+
+| `CAWDEV_STUB_SCRIPT` | What it does |
+|---|---|
+| `report-and-finish` | progress, then done (default) |
+| `ask-then-finish` | asks a question, waits, then done |
+| `crash` | exits non-zero without reporting |
+| `hang` | never exits — for testing cancellation |
+
+## If the daemon dies mid-run
+
+The platform notices. A run whose runner stops heartbeating for five minutes is
+failed with a reason saying so — otherwise it would sit `RUNNING` forever and
+block the project from starting anything else.
+
+A run **`WAITING_ON_USER` is never swept**. That is the one state where nothing
+happening is correct.
