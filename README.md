@@ -1,6 +1,6 @@
 # cawdev-website
 
-The user documentation for [cawdev](https://github.com/4dali/cawdev), built with
+The user documentation for [cawdev](https://github.com/4dali/cawdev-cli), built with
 [Astro Starlight](https://starlight.astro.build).
 
 ```sh

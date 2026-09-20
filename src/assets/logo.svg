@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
-  <rect x="1" y="6" width="8" height="20" rx="2.5" fill="#5561e8" opacity="0.45"/>
-  <rect x="12" y="3" width="8" height="26" rx="2.5" fill="#5561e8" opacity="0.75"/>
-  <rect x="23" y="9" width="8" height="14" rx="2.5" fill="#5561e8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134.17 86.08" role="img" aria-label="cawdev mark">
+  <g transform="translate(-3.83 -8.60)">
+    <path fill-rule="evenodd" d="M 8 80 C -2 54, 6 22, 32 12 C 60 1, 90 18, 95 44 L 96 62 C 92 84, 66 98, 38 94 C 20 91, 12 88, 8 80 Z M 68 42 m -7.5 0 a 7.5 7.5 0 1 0 15 0 a 7.5 7.5 0 1 0 -15 0 Z" fill="#4B3FD4"/>
+    <path d="M 95 42 L 138 54 L 94 66 Z" fill="#F0A22E"/>
+  </g>
 </svg>

@@ -1,0 +1,74 @@
+---
+/**
+ * The lockup, in the design system's own construction — the same one the
+ * landing page and the console draw.
+ *
+ * The mark's two paths and the `<g transform>` are inlined from
+ * cawdev-design-system/cawdev-mark.svg. The transform is part of the asset:
+ * the viewBox is the tight bounding box *after* that translate, so dropping
+ * it renders the crow cropped against the edges.
+ *
+ * `caw` and `dev` are split by weight (Sora 600 / 300) rather than by colour,
+ * which keeps violet exclusive to the mark.
+ */
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<a href={siteTitleHref} class="site-title" aria-label={`${siteTitle} home`}>
+	<svg viewBox="0 0 134.17 86.08" class="mark" aria-hidden="true">
+		<g transform="translate(-3.83 -8.60)">
+			<path
+				fill-rule="evenodd"
+				d="M 8 80 C -2 54, 6 22, 32 12 C 60 1, 90 18, 95 44 L 96 62 C 92 84, 66 98, 38 94 C 20 91, 12 88, 8 80 Z M 68 42 m -7.5 0 a 7.5 7.5 0 1 0 15 0 a 7.5 7.5 0 1 0 -15 0 Z"
+				fill="var(--caw-violet-500)"
+			/>
+			<path d="M 95 42 L 138 54 L 94 66 Z" fill="var(--caw-amber-400)"></path>
+		</g>
+	</svg>
+	<span class="wordmark" translate="no">
+		<span class="caw">caw</span><span class="dev">dev</span>
+	</span>
+	<span class="pill">Docs</span>
+</a>
+
+<style>
+	@layer starlight.core {
+		.site-title {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4em;
+			font-size: 1.0625rem;
+			color: var(--text-primary);
+			text-decoration: none;
+			white-space: nowrap;
+			min-width: 0;
+			border-radius: var(--radius-sm);
+		}
+		.mark {
+			height: 1em;
+			width: auto;
+			flex-shrink: 0;
+		}
+		.wordmark {
+			font-family: var(--font-display);
+			letter-spacing: -0.02em;
+			line-height: 1;
+		}
+		.caw {
+			font-weight: 600;
+		}
+		.dev {
+			font-weight: 300;
+		}
+		.pill {
+			margin-inline-start: 0.35em;
+			padding: 3px 0.5rem;
+			border: 1px solid var(--border-subtle);
+			border-radius: var(--radius-full);
+			font-family: var(--font-mono);
+			font-size: var(--text-micro);
+			line-height: 1.4;
+			color: var(--text-muted);
+		}
+	}
+</style>

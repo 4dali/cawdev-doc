@@ -1,0 +1,194 @@
+/* cawdev design tokens — v1.0
+   Import once at the root of the app, before any component styles. */
+
+:root {
+  /* ---- Brand: violet (the crow) ---- */
+  --caw-violet-50: #efedfd;
+  --caw-violet-100: #dcd8fb;
+  --caw-violet-200: #bdb6f5;
+  --caw-violet-300: #9b91ee;
+  --caw-violet-400: #7568e3;
+  --caw-violet-500: #4b3fd4;
+  --caw-violet-600: #3e33b4;
+  --caw-violet-700: #322992;
+  --caw-violet-800: #262070;
+  --caw-violet-900: #1a1650;
+
+  /* ---- Accent: amber (the beak) ---- */
+  --caw-amber-50: #fdf3e4;
+  --caw-amber-100: #fae2be;
+  --caw-amber-200: #f7cd8c;
+  --caw-amber-300: #f3b75c;
+  --caw-amber-400: #f0a22e;
+  --caw-amber-500: #d0850f;
+  --caw-amber-600: #a5680c;
+  --caw-amber-700: #7a4d09;
+  --caw-amber-800: #4f3206;
+  --caw-amber-900: #2e1d03;
+
+  /* ---- Neutral: violet-tinted slate ---- */
+  --caw-neutral-0: #ffffff;
+  --caw-neutral-25: #fafafc;
+  --caw-neutral-50: #f5f5f9;
+  --caw-neutral-100: #ebebf2;
+  --caw-neutral-200: #dadae6;
+  --caw-neutral-300: #bfbfd0;
+  --caw-neutral-400: #9494a8;
+  --caw-neutral-500: #6e6e83;
+  --caw-neutral-600: #545468;
+  --caw-neutral-700: #3e3e4f;
+  --caw-neutral-800: #2a2a38;
+  --caw-neutral-900: #16151f;
+  --caw-neutral-950: #101017;
+
+  /* ---- Status ---- */
+  --caw-success-50: #e6f5ef;
+  --caw-success-500: #17946b;
+  --caw-success-700: #0e6b4d;
+  --caw-danger-50: #fbe9e9;
+  --caw-danger-500: #d93f3f;
+  --caw-danger-700: #a32b2b;
+
+  /* ---- Semantic: surfaces ---- */
+  --bg-canvas: var(--caw-neutral-25);
+  --bg-surface: var(--caw-neutral-0);
+  --bg-raised: var(--caw-neutral-0);
+  --bg-sunken: var(--caw-neutral-50);
+  --bg-inverse: var(--caw-neutral-950);
+  --bg-brand: var(--caw-violet-500);
+  --bg-brand-hover: var(--caw-violet-600);
+  --bg-brand-subtle: var(--caw-violet-50);
+  --bg-accent-subtle: var(--caw-amber-50);
+  --bg-success-subtle: var(--caw-success-50);
+  --bg-danger-subtle: var(--caw-danger-50);
+  --bg-hover: var(--caw-neutral-50);
+  --bg-active: var(--caw-neutral-100);
+
+  /* ---- Semantic: text ---- */
+  --text-primary: var(--caw-neutral-900);
+  --text-secondary: var(--caw-neutral-600);
+  --text-muted: var(--caw-neutral-400);
+  --text-on-brand: #ffffff;
+  --text-brand: var(--caw-violet-600);
+  --text-accent: var(--caw-amber-600);
+  --text-success: var(--caw-success-700);
+  --text-danger: var(--caw-danger-700);
+  --text-inverse: var(--caw-neutral-50);
+
+  /* ---- Semantic: borders ---- */
+  --border-subtle: var(--caw-neutral-100);
+  --border-default: var(--caw-neutral-200);
+  --border-strong: var(--caw-neutral-300);
+  --border-brand: var(--caw-violet-500);
+  --border-danger: var(--caw-danger-500);
+
+  /* ---- Typography ---- */
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --text-display: 3rem;
+  --text-h1: 2.25rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.3125rem;
+  --text-h4: 1.125rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.8125rem;
+  --text-micro: 0.75rem;
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.02em;
+  --tracking-body: 0;
+  --tracking-wide: 0.08em;
+
+  /* ---- Space (4px base) ---- */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ---- Radius ---- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px rgba(16, 16, 23, 0.06), 0 1px 1px rgba(16, 16, 23, 0.04);
+  --shadow-md: 0 4px 12px rgba(16, 16, 23, 0.08), 0 1px 3px rgba(16, 16, 23, 0.06);
+  --shadow-lg: 0 12px 32px rgba(16, 16, 23, 0.12), 0 2px 8px rgba(16, 16, 23, 0.06);
+  --focus-ring: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--caw-violet-400);
+
+  /* ---- Motion ---- */
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 260ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ---- Layout ---- */
+  --container-max: 1200px;
+  --prose-max: 68ch;
+  --header-height: 64px;
+}
+
+[data-theme="dark"] {
+  --bg-canvas: var(--caw-neutral-950);
+  --bg-surface: var(--caw-neutral-900);
+  --bg-raised: #1e1d28;
+  --bg-sunken: #0b0b11;
+  --bg-inverse: var(--caw-neutral-50);
+  --bg-brand: var(--caw-violet-500);
+  --bg-brand-hover: var(--caw-violet-400);
+  --bg-brand-subtle: rgba(75, 63, 212, 0.16);
+  --bg-accent-subtle: rgba(240, 162, 46, 0.14);
+  --bg-success-subtle: rgba(23, 148, 107, 0.14);
+  --bg-danger-subtle: rgba(217, 63, 63, 0.14);
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(255, 255, 255, 0.09);
+
+  --text-primary: var(--caw-neutral-50);
+  --text-secondary: var(--caw-neutral-300);
+  --text-muted: var(--caw-neutral-400);
+  --text-brand: var(--caw-violet-300);
+  --text-accent: var(--caw-amber-300);
+  --text-success: #4dc79b;
+  --text-danger: #f08585;
+  --text-inverse: var(--caw-neutral-900);
+
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --focus-ring: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--caw-violet-300);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -10,9 +10,14 @@ dependencies. It is both the terminal you watch sessions in and the daemon that
 runs them; typing `cawdev` finds a daemon on this machine or starts one.
 
 ```sh
-npm install -g ./tools    # from a checkout of the cawdev repository
+npm install -g cawdev-cli
 cawdev
 ```
+
+The package is [`cawdev-cli` on npm](https://www.npmjs.com/package/cawdev-cli);
+it needs Node 20 or later and installs one command, `cawdev`. Working from a
+checkout instead? `npm install -g ./tools` from the repository root installs
+the same thing.
 
 :::tip[Zero dependencies is a feature]
 You are about to let this thing hold your Claude Code login and spawn agents

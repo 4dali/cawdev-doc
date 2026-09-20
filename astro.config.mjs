@@ -9,10 +9,26 @@ export default defineConfig({
 			title: 'cawdev',
 			description:
 				'The roadmap and changelog of many projects, reachable by the coding agents doing the work.',
-			logo: { src: './src/assets/logo.svg', replacesTitle: false },
 			favicon: '/favicon.svg',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/4dali/cawdev' }],
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/4dali/cawdev-cli' }],
+			// The design system's three faces. Sora 300 is loaded deliberately:
+			// the lockup sets `dev` in 300, and without that face the browser
+			// falls back to 500 and the wordmark's weight contrast disappears.
+			head: [
+				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
+				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true } },
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'stylesheet',
+						href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@300;500;600&display=swap',
+					},
+				},
+			],
+			// tokens.css is the design system's own file; custom.css binds
+			// Starlight's variables to it. The site title is the lockup.
 			customCss: ['./src/styles/custom.css'],
+			components: { SiteTitle: './src/components/SiteTitle.astro' },
 			lastUpdated: true,
 			sidebar: [
 				{
