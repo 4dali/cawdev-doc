@@ -13,17 +13,22 @@ npm run build    # → dist/
 
 | Section | Covers |
 |---|---|
-| **Start here** | What cawdev is, the model it is built from, and the first ten minutes in the console |
-| **Using the console** | The roadmap board, the changelog, runs and the inbox, the generated exports |
-| **Working with agents** | Minting tokens, the MCP server, the runner daemon |
-| **Running a deployment** | Deploying, the first administrator, accounts and roles |
-| **Reference** | Statuses, scopes, run states, keyboard shortcuts, troubleshooting |
+| **CLI & configuration** | Installing and signing in, `runner.config.json`, environment variables, the attached terminal, the runner daemon, lifecycle and stages, permissions and the shield, troubleshooting |
+| **MCP server** | Setting it up, the full tool reference, the working method it teaches an agent |
+| **Web console** | Finding your way around, the Plan boards (Roadmap/Issues/Backlog/Sprints), Work (Development/Sessions), Code, project settings, your account, administration, generated exports |
+
+Deployment docs (deploying cawdev itself, accounts and roles) were dropped in
+the rewrite rather than carried forward stale — they can come back as a fourth
+section when someone writes them against current behaviour.
 
 ## Conventions
 
-**The deployment URL is a placeholder.** Pages say `https://cawdev.example.com`
-throughout. A team hosting its own copy of these docs should replace it with
-their own address — it is a plain find-and-replace across `src/content/docs/`.
+**The example URL is `https://app.cawdev.com`.** That's cawdev's own hosted
+instance and the CLI's real default when nothing is configured — not a
+placeholder. A team self-hosting its own copy of these docs should replace it
+with their own address, the same plain find-and-replace across
+`src/content/docs/` as before; `localhost:4200`/`:8091` still show up where a
+page is specifically describing local development.
 
 **Pages that use Starlight components must be `.mdx`.** A `<Steps>` block or a
 `<Card>` in a `.md` file leaks its import line into the page as prose instead of

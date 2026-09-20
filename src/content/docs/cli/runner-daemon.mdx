@@ -1,0 +1,129 @@
+---
+title: The runner daemon
+description: What happens between claiming a run and reporting it finished, the two refusals, and how to test the plumbing for free.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+The runner is what makes starting a session from the console possible. It
+lives on **your** machine, holds the repositories and the coding agent's own
+login, and connects **outbound** — so there's no inbound port, and NAT and
+firewalls are nobody's problem. The platform holds no git credential and no
+Claude account; the spawned session authenticates exactly the way your own
+terminal does.
+
+## What it does with a run
+
+<Steps>
+
+1. **Claims it.** The claim is the one moment a run's own short-lived
+   `cawdr_` token exists — straight into the child's environment, never into a
+   file that outlives the run, and nowhere near your own `runner:operate`
+   token.
+
+2. **Prepares the working copy.** Fetches, then checks out the branch — from
+   the project's default branch, or from a sprint's base branch when the run
+   names one.
+
+3. **Spawns the agent** in that checkout, in its own process group, with the
+   run token in its environment and a generated `.mcp.json` pointing at
+   cawdev's own MCP server. The config is written to a temporary directory per
+   run and thrown away — nothing lands in your repository.
+
+4. **Reports the lifecycle back**, and ends the run if the session dies
+   without saying anything, rather than leaving it `RUNNING` forever.
+
+</Steps>
+
+## The one hard refusal: a dirty working copy
+
+If the checkout has uncommitted changes and the run wasn't started with
+permission to work on top of them, the daemon refuses outright, naming the
+files:
+
+```
+/Users/you/code/cawdev has uncommitted changes:
+ M src/thing.js
+
+Commit or stash them first, or start the run again and choose to work
+on top of them.
+```
+
+An agent shouldn't start work on top of yours by accident. If you *did* mean
+for it to build on what's there, the console lets you say so when you start
+the run — the daemon then logs what it's building on, loudly, on the run's
+own transcript.
+
+## No free checkout is a queue, not a refusal
+
+A project's concurrency **is** the number of workspaces you've given it — see
+[the config file](/cli/config-file/#project-entries). A run that has nowhere
+free to go doesn't fail; it queues, and the console says why: "no free
+workspace in `<project>` (2 here, all busy)."
+
+## Moving work between machines
+
+Four actions on a held checkout, all reachable from the console:
+
+| Action | What it does |
+|---|---|
+| **Show** | Diffs what's uncommitted against `HEAD`, untracked files listed separately |
+| **Stash** | Parks the uncommitted work under a labelled stash entry |
+| **Commit** | Commits it with a message you give |
+| **Reset** | `git reset --hard && git clean -fd`, then back onto `origin/<branch>` — or, if the branch was never pushed, onto the default branch with the local branch deleted |
+| **Hand off** | Pushes the branch, sends everything uncommitted to the platform as a patch, *then* resets — nothing is dropped before it's somewhere else |
+
+A hand-off lands on another machine by putting the checkout on
+`origin/<branch>` (never re-branching from the default, which would be wrong
+for work that already has commits on the remote) and applying the patch with
+`git apply --3way`. A patch that won't apply cleanly is never silently
+dropped — it's written beside the checkout, and the run's briefing says
+exactly where and how to apply it by hand.
+
+## If a session goes quiet
+
+Nothing is killed on a timer. A session that stops producing output for
+`idleSeconds` (1200s by default) gets one note on its own transcript saying
+so — it may be thinking, running something long, or genuinely stuck, and the
+cost of guessing wrong in either direction is asymmetric: ending a real
+twelve-minute test run costs somebody's work, while a note that turns out to
+be nothing costs one line.
+
+When a stage's turn ends, the daemon closes the session's stdin — that's the
+request to stop. If it hasn't exited after `sessionExitSeconds` (30s), the
+whole process group gets `SIGTERM`; if it's still there after that again, a
+`SIGKILL`. Being forced out this way isn't a failure — a stage is judged by
+whether its turn ended, not by how its process left.
+
+## Testing without spending a real run
+
+`stub-agent.mjs` stands in for `claude` — spawned the same way, talking to the
+platform through the same tools, but following a fixed script instead of
+thinking.
+
+```json
+{ "agentCommand": "/…/cawdev/tools/runner/stub-agent.mjs", "agentArgs": [] }
+```
+
+(Absolute path, no args — the runner puts `--mcp-config` first, and `node`
+would choke on it. The shebang runs the stub directly.)
+
+```sh
+CAWDEV_STUB_SCRIPT=ask-then-finish CAWDEV_TOKEN=cawd_… \
+  node tools/runner/runner.mjs --config runner.config.json
+```
+
+| `CAWDEV_STUB_SCRIPT` | Does |
+|---|---|
+| `report-and-finish` (default) | Progress, then done |
+| `ask-then-finish` | Asks a question, waits for the answer, then done |
+| `permission-then-finish` | Asks permission for a command, waits for the decision, then done |
+| `crash` | Exits non-zero without reporting anything |
+| `hang` | Says nothing, ever — for testing cancellation |
+| `usage-limit` | Reports a closed usage window, ends its turn successfully, then lingers — the exact shape that once sat `RUNNING` for forty-three minutes holding a machine's only slot |
+
+The stub does **not** exit when its turn ends, on purpose — the real CLI
+holds its stdin open the same way (see *if a session goes quiet*, above), and
+a stub that exited early would model away the one fact the whole stage walk
+depends on. `CAWDEV_STUB_EXIT=1` restores the old, less honest one-shot
+behavior for anything that genuinely wants that.

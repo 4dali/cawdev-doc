@@ -1,0 +1,95 @@
+---
+title: Installing and signing in
+description: One command. On a machine with nothing set up, it signs you in through the browser, clones your projects, and mints its own token.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+`cawdev` is the whole interface from a machine — one binary, plain Node, zero
+dependencies. It is both the terminal you watch sessions in and the daemon that
+runs them; typing `cawdev` finds a daemon on this machine or starts one.
+
+```sh
+npm install -g ./tools    # from a checkout of the cawdev repository
+cawdev
+```
+
+:::tip[Zero dependencies is a feature]
+You are about to let this thing hold your Claude Code login and spawn agents
+against your working copies. It should be a file you can read in one sitting
+before you run it.
+:::
+
+## The first time, on a machine with nothing set up
+
+Nothing is created until every question is answered — a setup abandoned
+halfway leaves no token on the tokens page and no config pointing at half a
+machine. That is what makes running `cawdev` again the whole recovery
+procedure.
+
+<Steps>
+
+1. **Sign in through the browser.** No password reaches this process — the CLI
+   asks the platform for a code, opens the sign-in page, and waits for you to
+   approve it there. A password belongs on a page a browser has told you the
+   origin of, not in a full-screen terminal app.
+
+2. **Choose which projects this machine should serve.** Only ones you can
+   write to are offered — `runner:operate` needs WRITER, so a project you can
+   only read would fail the mint afterwards.
+
+3. **Say where checkouts should live.** One question, not one per project —
+   `~/cawdev` unless you say otherwise.
+
+4. **It clones what isn't already there**, in the foreground, under your own
+   git credentials. The platform never holds a git credential; it only
+   supplies the URL a project was created with.
+
+5. **Say which coding agents are on this machine** (Claude Code, Antigravity
+   CLI) and confirm each is signed in. This is the one thing `cawdev` cannot
+   do for you — a runner whose agent isn't signed in boots fine and fails
+   every run, which is a worse way to find out than a question.
+
+6. **It mints its own `runner:operate` token**, scoped to exactly the projects
+   you chose, and writes the config. Nothing is typed or pasted.
+
+</Steps>
+
+Run `cawdev --setup` any time to do this again — adding a project to a machine
+that already has one is the ordinary reason. A daemon already running keeps
+the config it booted with, so it's told to restart rather than left looking
+like it took the change.
+
+## On a machine that already has a config but no token
+
+If a `runner.config.json` exists — checked in, copied from another machine —
+but holds no token, `cawdev` skips straight to signing in and minting one for
+the projects the config already names. Nothing else is asked, because the
+config already answers it.
+
+## What ends up on disk
+
+Three files under `~/.cawdev/`, each `0600`, each answering a different
+question:
+
+| File | What it holds | Why it's separate |
+|---|---|---|
+| `session.json` | Your browser session — the cookies from signing in | This is **you**. No password, and the daemon's own token is never in here. |
+| `token.json` | This machine's `runner:operate` token, keyed by URL | This is **what the machine may do**. Revoking it in the console stops the machine without touching your session. |
+| `runner.config.json` | Which projects, which checkouts, which agents | The one file people copy between machines or check in — and the one that must never carry a credential. |
+
+A token can also live **in** the config — that's the shape `--setup` wrote
+before this three-file split existed, and it's still read first if present.
+It's not how a fresh setup writes one, because a config is the kind of file
+people keep beside their code and commit.
+
+## Checking what's running
+
+```sh
+cawdev --version      # this CLI's version, and the platform's, needing no sign-in
+cawdev config show     # this machine's config, token redacted
+```
+
+`cawdev` warns on startup if this CLI and the platform it's talking to have
+drifted apart, and refuses to start the daemon if this CLI is below the
+platform's stated minimum.
