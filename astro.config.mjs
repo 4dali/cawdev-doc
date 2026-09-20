@@ -16,45 +16,37 @@ export default defineConfig({
 			lastUpdated: true,
 			sidebar: [
 				{
-					label: 'Start here',
+					label: 'CLI & configuration',
 					items: [
-						{ label: 'What cawdev is', slug: 'start/what-cawdev-is' },
-						{ label: 'The model', slug: 'start/the-model' },
-						{ label: 'Your first ten minutes', slug: 'start/first-ten-minutes' },
+						{ label: 'Installing and signing in', slug: 'cli/installing' },
+						{ label: 'The config file', slug: 'cli/config-file' },
+						{ label: 'Environment variables', slug: 'cli/environment-variables' },
+						{ label: 'The attached terminal', slug: 'cli/terminal-ui' },
+						{ label: 'The runner daemon', slug: 'cli/runner-daemon' },
+						{ label: 'Lifecycle and stages', slug: 'cli/lifecycle-and-stages' },
+						{ label: 'Permissions and the shield', slug: 'cli/permissions-and-shield' },
+						{ label: 'Troubleshooting', slug: 'cli/troubleshooting' },
 					],
 				},
 				{
-					label: 'Using the console',
+					label: 'MCP server',
 					items: [
-						{ label: 'The roadmap', slug: 'console/roadmap' },
-						{ label: 'The changelog', slug: 'console/changelog' },
-						{ label: 'Runs and the inbox', slug: 'console/runs' },
+						{ label: 'Setting it up', slug: 'mcp/setup' },
+						{ label: 'Tool reference', slug: 'mcp/tools' },
+						{ label: 'The working method it teaches', slug: 'mcp/working-method' },
+					],
+				},
+				{
+					label: 'Web console',
+					items: [
+						{ label: 'Finding your way around', slug: 'console/overview' },
+						{ label: 'Plan: Roadmap, Issues, Backlog, Sprints', slug: 'console/plan' },
+						{ label: 'Work: Development and Sessions', slug: 'console/work' },
+						{ label: 'Code: Git, Codemap, Changelog', slug: 'console/code' },
+						{ label: 'Project settings', slug: 'console/project-settings' },
+						{ label: 'Your account', slug: 'console/your-account' },
+						{ label: 'Administration', slug: 'console/administration' },
 						{ label: 'Generated exports', slug: 'console/exports' },
-					],
-				},
-				{
-					label: 'Working with agents',
-					items: [
-						{ label: 'Agent tokens', slug: 'agents/tokens' },
-						{ label: 'The MCP server', slug: 'agents/mcp' },
-						{ label: 'The runner daemon', slug: 'agents/runner' },
-					],
-				},
-				{
-					label: 'Running a deployment',
-					items: [
-						{ label: 'Deploying', slug: 'admin/deploying' },
-						{ label: 'Accounts and roles', slug: 'admin/accounts-and-roles' },
-					],
-				},
-				{
-					label: 'Reference',
-					items: [
-						{ label: 'Roadmap statuses', slug: 'reference/statuses' },
-						{ label: 'Token scopes', slug: 'reference/scopes' },
-						{ label: 'Run states', slug: 'reference/run-states' },
-						{ label: 'Keyboard shortcuts', slug: 'reference/shortcuts' },
-						{ label: 'Troubleshooting', slug: 'reference/troubleshooting' },
 					],
 				},
 			],

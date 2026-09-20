@@ -9,8 +9,8 @@ hero:
   image:
     file: ../../assets/logo.svg
   actions:
-    - text: What cawdev is
-      link: /start/what-cawdev-is/
+    - text: Install the CLI
+      link: /cli/installing/
       icon: right-arrow
     - text: Source on GitHub
       link: https://github.com/4dali/cawdev
@@ -34,32 +34,28 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
     stopped on. Your repositories and your Claude login never leave your machine.
   </Card>
   <Card title="The markdown stays" icon="document">
-    <code>ROADMAP.md</code> and <code>CHANGELOG.md</code> are generated exports
-    that stay committed and readable. The database is the source of truth.
+    <code>ROADMAP.md</code>, <code>ISSUES.md</code> and <code>CHANGELOG.md</code>{' '}
+    are generated exports that stay committed and readable. The database is the
+    source of truth.
   </Card>
 </CardGrid>
 
-## Where to start
+## Three ways in
 
 <CardGrid>
   <LinkCard
-    title="I was just given an account"
-    description="Sign in, find your projects, and learn what the board is telling you."
-    href="/start/first-ten-minutes/"
+    title="I want to run cawdev on my machine"
+    description="Install the CLI, sign in through the browser, and set up the daemon that spawns your agent sessions."
+    href="/cli/installing/"
   />
   <LinkCard
     title="I want my agent to read the roadmap"
-    description="Mint a token and wire the MCP server into a repository."
-    href="/agents/mcp/"
+    description="Mint a token and wire the MCP server into a repository — the tools a coding agent gets."
+    href="/mcp/setup/"
   />
   <LinkCard
-    title="I want to run a session from the console"
-    description="Set up the runner daemon on your machine, then press Start."
-    href="/agents/runner/"
-  />
-  <LinkCard
-    title="I have to deploy this"
-    description="Compose, the first administrator, accounts, and who may create projects."
-    href="/admin/deploying/"
+    title="I want to work in the console"
+    description="The rail, the boards, starting a session, and everything behind the account menu."
+    href="/console/overview/"
   />
 </CardGrid>

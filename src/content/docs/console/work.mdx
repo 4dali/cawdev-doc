@@ -1,0 +1,109 @@
+---
+title: "Work: Development and Sessions"
+description: The board of branches being worked, the sessions doing the work, and what they cost.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+**Plan** is what we intend. **Work** is what's actually happening: which
+branches are moving, which sessions are running them, and what that's costing.
+
+## Development
+
+A board of **branches**, not cards — a card names the work, a branch is where
+it's being done, and one branch can carry several cards. Five columns:
+
+| Column | Means |
+|---|---|
+| **Ready** | Created; nothing has run on it yet |
+| **Coding** | Being worked, by an agent or by a person — these are shown separately: a session running is one badge, someone having claimed the branch is the column |
+| **Review** | The last run finished and someone has to read it (only reached automatically in a project that requires review — see [Rules](/console/project-settings/)) |
+| **Done** | Reviewed and accepted, or a project with no review requirement's run finished cleanly |
+| **Not done** | Sent back with a note — not simply "Coding" again, because the next session is handed that note instead of the card |
+
+All five accept a drop, but who may move what differs: a **person** moves a
+branch when no session is on it; the **platform** moves it while one is. Two
+buttons stay buttons rather than becoming drags, because each carries
+something a drag can't:
+
+- **Ask an agent to review** (in Review) — starts a review session against the
+  branch, with nothing chosen: model and effort blank means Auto, and it runs
+  on whichever machine already holds the checkout, since that's the only place
+  the diff is.
+- **Done** / **Not done…** — the human verdict. Not done asks for a note, which
+  the next session receives *instead of* the card, and offers two
+  destinations for the branch's cards: back to Considering (the approach needs
+  rethinking) or Declined (not doing this — the note becomes the reason).
+- **Merge…** (in Done, owners only) — queues the merge on one of *your*
+  machines. cawdev holds no git credentials, so this always happens on a
+  runner you own, and the cards move to Merged once that machine reports the
+  pull request landed.
+- **Fix it** (in Not done) — starts a fresh session carrying the rejection
+  note.
+
+## Sessions
+
+Every agent session the project has had, live and finished.
+
+<Steps>
+
+1. Start one from a card ("Start development…"), from the Development board,
+   or from the [composer](/console/overview/#starting-work-without-a-page).
+   The branch name is pre-filled following the project's convention
+   (`r12-slug-of-title`) — change it if you know better.
+
+2. A [runner](/cli/runner-daemon/) claims it off the queue; the session moves
+   to **Running**. You don't pick which machine — runners *claim* work rather
+   than being assigned it, so what matters is whether anything is listening,
+   and the console shows you that rather than asking you to guess.
+
+3. The agent moves its card itself — the console never does. That's
+   deliberate: a card's status means "someone is actually working on this",
+   not "someone queued this".
+
+4. Progress arrives as it happens, in a live terminal. If a decision is
+   genuinely yours, it **asks and stops** — you'll see the question inline, or
+   in the [Inbox](/console/overview/#the-top-bar) from anywhere in the
+   console.
+
+</Steps>
+
+:::tip[Nothing sweeps a session waiting on you]
+A session stalled on a person is correct, and a person may reasonably take a
+day. What *is* swept is a session whose **runner** goes quiet — that one fails
+with a reason saying so, rather than sitting `Running` forever.
+:::
+
+**A project runs one live session per working copy at a time** — sessions
+share a checkout, so a second one on the same branch is refused, readably. A
+project with several checkouts of the same repository can run that many
+sessions in parallel.
+
+**Cancel** reaches the runner on its next poll and takes down the whole
+process tree an agent started — a build it kicked off doesn't get left
+running. Anything already committed stays committed; cancelling and re-running
+means a *new* session, keeping the record of what actually happened.
+
+A stopped session offers up to four things, depending on what its working copy
+holds:
+
+| Action | Does |
+|---|---|
+| **Carry on** | Resume on the same machine, or the runner that's free |
+| **Hand off…** | Push the branch, send the uncommitted tree as a patch, and free the checkout for something else — the next session picks the patch up on a fresh runner |
+| **Start over** | Discard, reset the checkout, and start a fresh session in the same slot |
+| **Discard** | Drop the uncommitted work and free the checkout, ending resumability |
+
+### Permission requests
+
+A session that hits something no standing rule covers stops and asks, rather
+than being silently denied or silently allowed. Answering it from the run page
+offers the three lengths of yes cawdev's CLI offers at the terminal — once,
+for the rest of this run, or as a standing project rule — so a decision made
+here can outlive the session that asked it.
+
+## Insights
+
+The retrospective numbers: how long planning and coding actually take on this
+project, and what a session costs in tokens. It sits after Sessions because
+it's *about* them — the totals of what's above.
