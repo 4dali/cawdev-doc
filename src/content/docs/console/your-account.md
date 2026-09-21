@@ -1,10 +1,10 @@
 ---
 title: Your account
-description: Username, password, your default model, notifications, agent tokens, and the runners that work on your behalf.
+description: Username, password, your default model, notifications, agent tokens, API tokens, and the runners that work on your behalf.
 ---
 
 One area, behind the account menu, and it holds everything about *you* rather
-than about any one project — six sections.
+than about any one project — seven sections.
 
 | Section | Holds |
 |---|---|
@@ -13,6 +13,7 @@ than about any one project — six sections.
 | **Defaults** | Your fallback model, used when a session doesn't name one |
 | **Notifications** | The browsers told when something waits for you |
 | **Agent tokens** | Tokens you've minted for agents |
+| **API tokens** | Tokens you've minted for your own applications, and their webhooks |
 | **Runners** | The machines that can run sessions for you |
 
 ## Account and username
@@ -40,6 +41,20 @@ project reaches it on its very next call.
 A `cawdr_` token minted for one running session is machinery of that run, not
 a credential you manage — the API omits it from this list entirely.
 :::
+
+## API tokens
+
+The same rule, the same list, for a different kind of token: one your *own
+application* holds — a support tool that files what customers report, a
+dashboard that shows where a card has got to. An API token starts `cawa_`,
+holds at most three scopes (`backlog:write`, `cards:file`, `cards:read`) and
+reaches a small versioned surface of its own; the mint form asks for projects
+only, because the scopes are decided. Under each live token sits its
+**webhook** — the URL the platform calls when a card moves, its signing
+secret shown once, *Send a test*, and the last deliveries.
+
+The whole of it — minting, the five calls, the status vocabulary and the
+webhook — is the [Integration API](/api/integration/) section.
 
 ## Runners
 

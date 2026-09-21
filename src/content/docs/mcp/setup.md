@@ -38,6 +38,14 @@ person's act, refused to every token.
 implies `changelog:read`. You don't need to grant both halves of a pair.
 :::
 
+:::tip[An application rather than an agent?]
+If what you are wiring in is your own code — a support tool, a dashboard, a
+bot — rather than a coding agent, mint an **API token** instead. It holds
+`backlog:write`, `cards:file` and `cards:read` and nothing more, files and
+reads over a versioned surface of its own, and can be told over a signed
+webhook when a card moves. See the [Integration API](/api/integration/).
+:::
+
 ## Wire it into a repository
 
 Add `.mcp.json` in the repository the agent works in:

@@ -53,6 +53,14 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'Integration API',
+					items: [
+						{ label: 'Tokens and authentication', slug: 'api/integration' },
+						{ label: 'Filing and reading cards', slug: 'api/calls' },
+						{ label: 'Webhooks', slug: 'api/webhooks' },
+					],
+				},
+				{
 					label: 'Web console',
 					items: [
 						{ label: 'Finding your way around', slug: 'console/overview' },
