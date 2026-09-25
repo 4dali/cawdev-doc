@@ -75,10 +75,19 @@ for what turning that on actually means before you do.
 ## Every run fails immediately
 
 Check that the coding agent itself is signed in **on this machine** —
-`claude` (or `agy`), run once by hand. `cawdev --setup` asks this up front for
-exactly this reason: a runner whose agent isn't signed in boots perfectly and
-fails every single run, which is a much worse way to find out than a
-question.
+`claude`, `agy` or `codex`, run once by hand. `cawdev --setup` asks this up
+front for exactly this reason: a runner whose agent isn't signed in boots
+perfectly and fails every single run, which is a much worse way to find out
+than a question.
+
+## "ssh needed to ask you something" during a clone
+
+An ssh URL whose key has a passphrase, or a host being trusted for the first
+time, needs ssh to ask a question on the terminal directly — something the
+attached screen can't hand over mid-draw, so it clones in batch mode instead
+and fails at once rather than hanging. Add the key to your agent once
+(macOS: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`) and try again, or
+run `cawdev config add-project` from a plain shell, which can ask.
 
 ## Still stuck
 

@@ -37,7 +37,10 @@ something a drag can't:
 - **Merge…** (in Done, owners only) — queues the merge on one of *your*
   machines. cawdev holds no git credentials, so this always happens on a
   runner you own, and the cards move to Merged once that machine reports the
-  pull request landed.
+  pull request landed. A branch merged **outside** cawdev — a pull request
+  merged on GitHub, a `git merge` by hand — is noticed the same way: the next
+  time a runner reads the branch, every card still In development on it moves
+  to Merged on its own, with a note on the card saying which machine saw it.
 - **Fix it** (in Not done) — starts a fresh session carrying the rejection
   note.
 

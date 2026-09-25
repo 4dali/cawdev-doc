@@ -23,7 +23,7 @@ second-guessed by a file sitting nearby.
 | `CAWDEV_PROJECT` | The MCP server, the roadmap/changelog scripts | Which project to act on, when a token grants more than one. |
 | `CAWDEV_RUNNER_CONFIG` | `cawdev` | An explicit path to a config file, checked before the current directory's `runner.config.json` and before `~/.cawdev/runner.config.json`. |
 | `CAWDEV_RUNNER_NAME` | The daemon | Overrides the config's `name` — how this machine identifies itself. |
-| `CAWDEV_AGENT_COMMAND` | The daemon | Comma-separated list of agent commands, overriding `agentCommands` in the config. |
+| `CAWDEV_AGENT_COMMAND` | The daemon | Comma-separated list of agent commands, overriding `agentCommands` in the config — e.g. `claude,codex`. |
 | `CAWDEV_HISTORY_FILE` | The attached terminal | Where your typed-prompt history is kept. Defaults to `~/.cawdev/history.json`. |
 | `CAWDEV_RUN_DIR` | The daemon, `cawdev` | Where the control socket lives. Defaults to `~/.cawdev/run`. Only worth setting if you're running more than one daemon under different home directories. |
 | `CAWDEV_APPROVAL_TIMEOUT_SECONDS` | The MCP server | How long a blocked permission request waits before giving up. |
