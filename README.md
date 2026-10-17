@@ -13,10 +13,10 @@ npm run build    # → dist/
 
 | Section | Covers |
 |---|---|
-| **CLI & configuration** | Installing and signing in, `runner.config.json`, environment variables, the attached terminal, the runner daemon, lifecycle and stages, permissions and the shield, troubleshooting |
+| **CLI & configuration** | Installing and signing in, `runner.config.json`, environment variables, the attached terminal, the runner daemon, agents, git hosts, lifecycle and stages, permissions and the shield, Jira import, troubleshooting |
 | **MCP server** | Setting it up, the full tool reference, the working method it teaches an agent |
 | **Integration API** | API tokens for an application built beside cawdev: the five calls under `/api/integration/v1/`, the one-word status vocabulary, and the signed webhook |
-| **Web console** | Finding your way around, the Plan boards (Roadmap/Issues/Backlog/Sprints), Work (Development/Sessions), Code, project settings, your account, administration, generated exports |
+| **Web console** | Finding your way around, live sessions and Waiting on you, the Roadmap, a card, Feedback, Development/runs/insights, review and merge, Code, All projects, teams and sprints, team access and privileges, project settings, your settings, administration, generated exports |
 
 Deployment docs (deploying cawdev itself, accounts and roles) were dropped in
 the rewrite rather than carried forward stale — they can come back as a

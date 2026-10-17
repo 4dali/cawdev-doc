@@ -4,6 +4,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	// The Plan page became The Roadmap (chunk B deletes console/plan.md).
+	redirects: { '/console/plan/': '/console/roadmap/' },
 	integrations: [
 		starlight({
 			title: 'cawdev',
@@ -76,8 +78,10 @@ export default defineConfig({
 						{ label: 'Review, verdict and merge', slug: 'console/review-and-merge' },
 						{ label: 'Code: Quality, Git, Map, Changelog', slug: 'console/code' },
 						{ label: 'All projects', slug: 'console/portfolio' },
+						{ label: 'Teams and sprints', slug: 'console/teams' },
+						{ label: 'Team access and privileges', slug: 'console/team-access' },
 						{ label: 'Project settings', slug: 'console/project-settings' },
-						{ label: 'Your account', slug: 'console/your-account' },
+						{ label: 'Your settings', slug: 'console/your-account' },
 						{ label: 'Administration', slug: 'console/administration' },
 						{ label: 'Generated exports', slug: 'console/exports' },
 					],
