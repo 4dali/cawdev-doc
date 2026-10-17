@@ -122,8 +122,8 @@ review) and the snackbar names everything that moved.
 
 | Door | Default |
 |---|---|
-| Written in the console | On the board |
-| Proposed by an agent | In the backlog |
+| Written in the console, by a person or by a plan run asked for one, or accepted from a run's proposal | On the board |
+| Filed by an agent on its own | In the backlog |
 | Accepted from feedback, including through the [Integration API](/api/integration/) | In the backlog |
 
 plus **Issues use the backlog**, which says whether a filed issue waits in
