@@ -17,26 +17,45 @@ cawdev repository.
 
 ## Mint a token
 
-In the console, under **Agent tokens**, mint one and grant it scopes on the
-project:
+In the console, under **Your settings → Agent tokens**, mint one and grant it
+scopes on the project:
 
-| Scope | Lets the token |
-|---|---|
-| `roadmap:read` / `roadmap:write` | Read, or read and write, the roadmap and issues |
-| `changelog:read` / `changelog:write` | Read, or read and write, the changelog |
-| `backlog:write` | File feedback only — not read the roadmap, not accept its own filing |
+| Scope | Lets the token | Needs the privilege |
+|---|---|---|
+| `roadmap:read` / `changelog:read` | Read the roadmap and issues, or the changelog | **See** |
+| `backlog:write` | File feedback only — not read the roadmap, not accept its own filing | **See** |
+| `roadmap:write` | Read and write the roadmap and issues | **Edit cards** |
+| `changelog:write` | Read and write the changelog | **Edit cards** |
+| `runner:operate` | Run a machine's [runner daemon](/cli/runner-daemon/) for the project: register, claim runs, report their lifecycle | **Run agents** |
+| `roadmap:import` | Bring another system's history in ([the Jira importer](/cli/jira-import/)) | **Import**, a project's direct owners only |
 
-**You can only grant what you hold.** A `READER` on the project can mint read
-scopes and `backlog:write`; only a `WRITER` can mint `roadmap:write` or
-`changelog:write`. A token meant only to *file feedback* — a tool built beside
-cawdev, say, or an agent you don't fully trust — should get `backlog:write`
-alone: it can propose, but deciding what the feedback becomes is a signed-in
-person's act, refused to every token.
+`agent:report` and `agent:ask` follow the same rule (**Run agents**), but they
+are not grantable by hand: they are minted with a run's own `cawdr_` token and
+expire with it.
+
+**You can only grant what you hold.** Each scope stands for one privilege on
+the project, and you can mint it only while you hold that privilege there. The
+rule is checked again at every call, against your access *at that moment*: a
+token works only while its owner still holds the privilege. Lose it, or leave
+the project, and the token loses that scope the same moment. How privileges
+are held, directly or through a team, is on [Team access and
+privileges](/console/team-access/).
+
+A token meant only to *file feedback* — a tool built beside cawdev, say, or an
+agent you don't fully trust — should get `backlog:write` alone: it can propose,
+but deciding what the feedback becomes is a signed-in person's act, refused to
+every token.
 
 :::note
 `roadmap:write` implies `backlog:write` and `roadmap:read`; `changelog:write`
-implies `changelog:read`. You don't need to grant both halves of a pair.
+implies `changelog:read`; `runner:operate` implies `roadmap:read`. You don't
+need to grant both halves of a pair. `roadmap:import` covers nothing and nothing
+covers it, not even `roadmap:write`, and only an agent token may hold it. A
+run's own token is refused it inside the handler.
 :::
+
+Once a token is live, **Change access…** widens or narrows the projects it
+holds in place, without minting a second token.
 
 :::tip[An application rather than an agent?]
 If what you are wiring in is your own code — a support tool, a dashboard, a
