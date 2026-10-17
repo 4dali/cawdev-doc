@@ -5,8 +5,8 @@ template: splash
 hero:
   title: A roadmap your agents<br /><span class="text-gradient">can read.</span>
   tagline: |
-    A changelog they can write, and a console where you start a session on an
-    entry and answer its questions while it works. This is how to set it all up.
+    A changelog they can write, and a console where you start a run on a card
+    and answer what is waiting on you while it works. This is how to set it all up.
   actions:
     - text: Install the CLI
       link: /cli/installing/
@@ -22,15 +22,21 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 <CardGrid stagger>
   <Card title="One place, many projects" icon="open-book">
     Every project is a named pointer at a git repository, with its own roadmap,
-    changelog and members. One deployment serves a whole team.
+    changelog and members. Share a project with a <strong>team</strong>, and the
+    team plans <strong>sprints across its projects</strong>.
+  </Card>
+  <Card title="One Roadmap" icon="list-format">
+    Roadmap cards and issues share one pipeline, with a lane for what is new and a
+    lane for what is planned, each kind keeping its own workflow.
   </Card>
   <Card title="Agents get the same verbs you do" icon="puzzle">
     The MCP server hands a coding agent the roadmap and changelog with tokens
     you mint and can revoke — never more than you can do yourself.
   </Card>
-  <Card title="Start a session from the console" icon="rocket">
-    Point an agent at a roadmap entry, watch it report, answer the question it
-    stopped on. Your repositories and your Claude login never leave your machine.
+  <Card title="Start a run on a card" icon="rocket">
+    Point an agent at a card, watch it report, and answer what is waiting on you
+    when it stops to ask. Your repositories and your Claude login never leave
+    your machine.
   </Card>
   <Card title="The markdown stays" icon="document">
     <code>ROADMAP.md</code>, <code>ISSUES.md</code> and <code>CHANGELOG.md</code>{' '}
@@ -39,7 +45,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
   </Card>
 </CardGrid>
 
-## Four ways in
+## Ways in
 
 <CardGrid>
   <LinkCard
@@ -54,8 +60,13 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
   />
   <LinkCard
     title="I want to work in the console"
-    description="The rail, the boards, starting a session, and everything behind the account menu."
+    description="The rail, the Roadmap and Development boards, starting a run, and everything behind the account menu."
     href="/console/overview/"
+  />
+  <LinkCard
+    title="I'm moving my team off Jira"
+    description="Import your issues and sprints, then plan sprints together across projects as a team."
+    href="/cli/jira-import/"
   />
   <LinkCard
     title="I'm building an application beside cawdev"
