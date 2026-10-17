@@ -12,18 +12,19 @@ is down, and listed under the token with what your end answered.
 
 ## Set one
 
-**Settings → API tokens**, under the token: a **URL**, *Tell it about* —
+**Your settings → API tokens**, under the token: a **URL**, *Tell it about* —
 **Cards this token filed** (the default) or **Every card in its projects** —
-and **Save**. You are shown a **signing secret once**; copy it into your
-application's configuration beside the token and press *I have copied it*.
+and **Save webhook**. A dialog shows the **signing secret once**; use *Copy
+secret* to put it in your application's configuration beside the token, then
+*Close*.
 
 Then press **Send a test**. The platform POSTs a `ping` — the envelope with
 no subject — so you can check your signature verification before anything
 real arrives. It appears under *Last deliveries* with what your end answered.
 
 One webhook per token. Changing the URL or the scope keeps the secret;
-**Rotate secret** issues a new one, shown once, and the old one stops
-verifying the moment it does. **Remove** deletes the webhook with its
+**Rotate secret** asks first, then issues a new one, shown once in the same
+dialog, and the old one stops verifying the moment it does. **Remove** deletes the webhook with its
 deliveries.
 
 :::note[A person's act, never the token's]
@@ -76,8 +77,8 @@ The body is an envelope, and for the two real events a subject beside it:
     "phase": "CODING",
     "work": { "branch": "r12-export-to-csv", "status": "CODING", "prUrl": null, "note": null, "signedOff": false },
     "run": { "id": "2b7e…", "profile": "CODE", "state": "RUNNING", "startedAt": "2026-09-21T10:02:41Z", "finishedAt": null },
-    "path": "/projects/my-project/roadmap/12",
-    "url": "https://app.cawdev.com/projects/my-project/roadmap/12",
+    "path": "/projects/my-project/roadmap/R12",
+    "url": "https://app.cawdev.com/projects/my-project/roadmap/R12",
     "updatedAt": "2026-09-21T10:02:41Z"
   }
 }
@@ -86,7 +87,7 @@ The body is an envelope, and for the two real events a subject beside it:
 | `event` | Carries | When |
 |---|---|---|
 | `card.status` | `project` and `card` — the same shape `GET …/cards/{ref}` answers | A card in the webhook's reach changed `phase` |
-| `feedback.outcome` | `project` and `feedback` — the same shape `GET …/feedback/{id}` answers | A `WRITER` accepted or refused feedback in the webhook's reach |
+| `feedback.outcome` | `project` and `feedback` — the same shape `GET …/feedback/{id}` answers | A person accepted or refused feedback in the webhook's reach |
 | `ping` | The envelope alone | *Send a test* |
 
 *Reach* is the scope you chose: **Cards this token filed** means the cards
@@ -147,6 +148,13 @@ answered (the status and the first 200 characters of the body), and why it
 is retrying or gave up. Never the body that was sent and never the secret. It
 is where "did it send, and what did my server say" is answered without
 adding logging to your receiver.
+
+:::caution[A Jira import can flood this]
+Importing a project from [Jira](/cli/jira-import/) files or moves a card per
+issue, and a webhook scoped to **Every card in its projects** gets a
+`card.status` for each. Point it elsewhere before the first real run if that
+would be a flood.
+:::
 
 :::tip[Which phases to act on]
 Most applications care about a handful: `MERGED` and `SHIPPED` (tell the

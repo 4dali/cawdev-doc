@@ -61,17 +61,53 @@ A project's concurrency **is** the number of workspaces you've given it — see
 free to go doesn't fail; it queues, and the console says why: "no free
 workspace in `<project>` (2 here, all busy)."
 
+A free checkout with uncommitted work in it is not preferred over a clean one:
+the daemon takes the first free checkout that reads clean, and falls back to a
+dirty one only when every free checkout is dirty. When you start a run from the
+console and the checkout is dirty, a third way out beside *Start anyway* and
+*Cancel* is to **wait for a clean one**: the run stays queued, with a reason,
+until one is. If the workspace folder for a project is missing from disk, the
+run queues too and says so, rather than failing at spawn.
+
+A checkout that a failed run left is **held**: it isn't cleaned and isn't
+offered to anything else until someone carries the run on or discards it from
+the run page.
+
+## Reading copy
+
+A plan, a verify or an ask cuts no branch and takes no checkout. Left to read
+in the project's first checkout, it would read whatever branch the last run
+happened to leave there. So such a session reads in `<first>-read`, beside the
+first checkout: a detached `git worktree` brought to `origin/<default branch>`
+at the start of a session whenever nobody else is reading in it. The checkout
+itself is never moved, because a coding run may be working in it. If the copy
+can't be made (no remote, not a repository) the session reads the first
+checkout as before, and the log says why.
+
 ## Moving work between machines
 
-Four actions on a held checkout, all reachable from the console:
+The daemon polls for requests a person makes of a checkout it serves. A request
+that names a path the daemon wasn't given is refused rather than run. The ones
+you meet:
 
 | Action | What it does |
 |---|---|
 | **Show** | Diffs what's uncommitted against `HEAD`, untracked files listed separately |
 | **Stash** | Parks the uncommitted work under a labelled stash entry |
-| **Commit** | Commits it with a message you give |
+| **Commit** | Commits it with a message you give. Your repository's hooks run; `--no-verify` is never passed |
 | **Reset** | `git reset --hard && git clean -fd`, then back onto `origin/<branch>` — or, if the branch was never pushed, onto the default branch with the local branch deleted |
 | **Hand off** | Pushes the branch, sends everything uncommitted to the platform as a patch, *then* resets — nothing is dropped before it's somewhere else |
+| **Merge** | Merges the branch's pull request (or merge request) on the host. It touches no working tree, so several branches merge safely from one clone, and a project's merges go to machines one at a time, in the order they were asked for |
+| **Tag** | Asks the **remote**, not this clone, whether a release's tag is there. A tag that isn't there yet is a normal answer |
+| **Cut sprint branch** | Pushes the default branch's tip to a new name on the remote, for a sprint's branch. A branch already there counts as success |
+| **Open PR** | Opens the pull or merge request, or finds the existing one |
+| **Create branch** | Pushes a chosen branch's tip to a new name on the remote, from the console |
+
+The code-map refresh button also arrives here. Merge, Open PR and Create branch
+use `gh` or `glab`; see [Git hosts](/cli/git-hosts/). A failed merge also says
+which kind of failure it was (a conflict, no pull request, not permitted,
+unreachable, or other), which is what lets the console offer *Merge with an
+agent* on a conflict and nowhere else.
 
 A hand-off lands on another machine by putting the checkout on
 `origin/<branch>` (never re-branching from the default, which would be wrong
@@ -79,6 +115,53 @@ for work that already has commits on the remote) and applying the patch with
 `git apply --3way`. A patch that won't apply cleanly is never silently
 dropped — it's written beside the checkout, and the run's briefing says
 exactly where and how to apply it by hand.
+
+## A finished coding run is committed and pushed
+
+Whatever the project's rules say, a coding run reaches `FINISHED` only with a
+clean checkout and its branch's commits on the remote. Two doors, one check:
+
+- **`report done` refuses** while anything is left, naming the uncommitted files
+  and the commits the remote hasn't seen, so the session commits what belongs
+  and pushes in its own turn.
+- **When the daemon ends the run** (the lifecycle's last stage, or a session
+  that exited without reporting) it settles the branch itself: it commits what is
+  left, pushes without force, and says so in the summary. It never commits
+  anything that looks like a credential, and it doesn't win a push the remote
+  refuses.
+
+A secret found, or a push refused, turns the run `FAILED` with the reason in its
+summary and the checkout held, so *Carry on*, *Commit* or *Discard* decide, not
+the next run.
+
+## A stage isn't done while its commands are running
+
+A stage is one turn, closed the moment the turn ends, so a test suite started in
+the background and never waited for is a result lost. A stage whose turn ends
+with a background shell, or an `Agent` delegation, still running (or finished
+and never read) is reported `FAILED` with the commands named, and the run fails
+with it. It keeps its checkout and its session, so **`/continue`** picks it up.
+The re-run is told why the stage stopped and to run its commands in the
+foreground. `IMPLEMENT` and `TEST` are also told up front to wait for every
+command, and `TEST` to commit.
+
+## Scanning a branch
+
+A project with a `quality` block in the config (see [the config
+file](/cli/config-file/#project-entries)) has its branch scanned with SonarQube
+after a coding run's `TEST` stage settles and before the next stage begins, on
+the tree the tests just ran against. A scan that can't run is said on the run
+page, and the run goes on to its next stage regardless.
+
+## If the daemon is restarted
+
+A daemon that dies and is restarted keeps a note of the runs it was driving
+(`~/.cawdev/driving/`). On boot the next one fails every such run **at once** as
+`DAEMON_RESTARTED`, with the old and new process ids, and stops a session the
+old daemon left running. The workspace is held as for any failure. A machine with
+**auto-resume** on carries such a run on by itself **once**; a second restart on
+the same run waits for a person. The usual cause on a small Linux box is memory;
+see [Troubleshooting](/cli/troubleshooting/#the-daemon-was-restarted-daemon_restarted).
 
 ## If a session goes quiet
 
@@ -94,6 +177,12 @@ request to stop. If it hasn't exited after `sessionExitSeconds` (30s), the
 whole process group gets `SIGTERM`; if it's still there after that again, a
 `SIGKILL`. Being forced out this way isn't a failure — a stage is judged by
 whether its turn ended, not by how its process left.
+
+## Which agent, and which git host
+
+The daemon spawns Claude Code, Codex or Antigravity as a run asks, and talks to
+GitHub through `gh` or to GitLab through `glab`. Those have their own pages:
+[Agents](/cli/agents/) and [Git hosts](/cli/git-hosts/).
 
 ## Testing without spending a real run
 
