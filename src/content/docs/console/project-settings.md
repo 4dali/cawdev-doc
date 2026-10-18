@@ -281,5 +281,11 @@ exactly what the run would be told.
 ### Memory
 
 What runs have left each other, per branch and append-only: what was tried,
-what was rejected and why. The next run on a branch is handed them. Read-only
-here; whether runs write one is the *Memory* stage under [Stages](#stages).
+what was rejected and why. The next run on a branch is handed them. Anybody who
+can see the project reads them.
+
+If you may edit cards, **Leave a note for the next session** (or **Leave a note
+on this branch** on a row) opens a branch field and a markdown editor; **Save
+note** appends it like a run's and says *Note saved for `<branch>`*. A note is
+never edited: correct it with a newer one. Whether runs write one themselves is
+the *Memory* stage under [Stages](#stages).

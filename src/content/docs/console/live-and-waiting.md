@@ -65,6 +65,11 @@ is. A list with nothing in it is not drawn.
 2. **To review.** Finished work that needs a reader. *Mark done* and *Not
    done…* open the review, because a review is a diff and the verdict is not
    given from a list. See [Review, verdict and merge](/console/review-and-merge/).
+   A branch you moved to Review by hand is here too, marked *Offered by hand by*
+   you: moving it asks for a reader whatever the project's review rule says
+   (moving it back out takes the request away). **Start reviewing** claims it
+   with no session behind it, and a Not-done note on it is what the next session
+   on the card is told.
 3. **Finished for you.** Runs you started that ended: *3 findings to look at*
    for an audit, *4 cards to look at* for a scoping run, *Answered* for an ask.
    A row goes when you follow its link or press **Dismiss**. A run you

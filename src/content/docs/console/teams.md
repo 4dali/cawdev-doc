@@ -36,7 +36,9 @@ not in a team yet*.
 
 A team's page reads top to bottom:
 
-- **The head** names the team and offers the one filled button, **New sprint**.
+- **The head** names the team and offers the one filled button, **New sprint**
+  (a toast says *S8 created* with an **Open** button for its page), and a
+  **Backlog** button for the [team backlog](/console/team-backlog/).
 - **Team chips** switch team and end with a quiet *New team*.
 - **Active** — the one sprint being worked: its ref (`S7`), name, goal, dates,
   days left, how many cards are done, then its cards grouped by project.
@@ -95,7 +97,8 @@ pipeline on the way; taking a card to the Backlog takes it out of its sprint.
 Three ways to file one:
 
 1. The card's **Sprint** field (a select grouped by team).
-2. The sprint page's **Add cards…** dialog.
+2. The sprint page's **Add cards…** dialog, or the [team
+   backlog](/console/team-backlog/).
 3. From an agent or script: the `sprint` field, which takes `7`, `S7`,
    `"Core team · S7"`, a sprint id, or `""` to clear. See
    [Tool reference](/mcp/tools/).
@@ -106,12 +109,23 @@ ref as a chip on both boards; the chip opens the sprint's page.
 ### The sprint page
 
 `/teams/<id>/sprints/<n>`: the head names the sprint and offers the one act its
-state allows. Under it are the goal, the dates, progress, then the cards
-**grouped by project**. **Add cards…** lists a project's cards not yet in the
-sprint (ticking one in another sprint moves it); a row's menu has **Remove from
-sprint**. Adds and removes go together: if the server refuses one, it names it
-and nothing moves. If you only read a project you see its cards and nothing to
-change, and a Completed sprint changes no cards.
+state allows. Under it are the goal, the dates, progress, the **estimate total**
+(*estimate 13, 2 cards without one*, shown once any card has an estimate), then
+the cards **grouped by project**.
+
+**Add cards…** prepares a sprint, an empty upcoming one too, before it starts.
+It is in the head, in the empty state and on each project, for anyone holding
+**Edit cards** on a project the team reaches (not on a Completed sprint or an
+archived team). The dialog has a **Project** picker when more than one project
+is shared with the team, a search, and a checkbox per card showing its status and
+*now in S7 · Core team* when it sits in another sprint (ticking it moves it).
+Backlog, Considering, Planned, Confirmed and In development cards are offered; a
+Backlog card leaves the backlog on the way and lands New (Considering for a
+card). A row's menu has **Remove from sprint**. Adds and removes go together: if
+the server refuses one, it names it and nothing moves. If you only read a
+project you see its cards and nothing to change, and a Completed sprint changes
+no cards. The sprint page has a **Backlog** link to the [team
+backlog](/console/team-backlog/).
 
 ### A branch per project
 

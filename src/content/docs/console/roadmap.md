@@ -12,9 +12,42 @@ share one pipeline, and each keeps its own workflow inside it.
 Backlog ▸ | New | Planned | In development | Merged | ◂ Declined
 ```
 
-The board is at `/projects/<slug>/roadmap`. There is no separate Issues page and
-no Issues row in the rail: `/projects/<slug>/issues` opens the Roadmap showing
-issues (`?kind=ISSUE`), keeping whatever you had in the address.
+There is **one Roadmap, and it is across projects**: it opens at
+`/portfolio/roadmap` over every project you are on, and a project has no board
+of its own. Pick one project in the scope row, or follow the link on that
+project's Overview, and the same board narrows to it (`?projects=<slug>`). See
+[One Roadmap, across projects](#one-roadmap-across-projects) below. There is no
+separate Issues page and no Issues row in the rail: `/projects/<slug>/issues`
+opens the Roadmap showing issues (`?kind=ISSUE`), keeping whatever you had in
+the address.
+
+## One Roadmap, across projects
+
+With no project picked the board shows **All projects**, a lane per project
+(*Organise by → Project* is its default). Each tile leads with its project's key
+and the ref (`SAAS-R12`), and a card opens over the board as `?card=SAAS-R12`.
+Everything you do to a card is sent to that card's own project, and what you may
+do follows your access there: a lane for a project you only read says *you read
+only* and refuses a drop.
+
+Pick **one** project and the board narrows to it (crumb `SaaS / Roadmap`) and
+also shows what belongs to that project alone:
+
+- the column **limits** (a column's menu has *Set limit…* if you hold *Manage
+  settings*) and the project's **saved views**;
+- **Manage sections** beside **New card**;
+- the **Ready to release** link under Merged, for people who hold *Release*;
+- the setup banner on an empty project, and the *Version* filter.
+
+With several projects in view those are hidden; saved boards (see [All
+projects](/console/portfolio/#choosing-the-projects)) are the views instead.
+The view you had is not remembered between visits: a link or a saved board is
+the standing filter.
+
+The old project addresses still work. `/projects/<slug>/roadmap` and
+`/projects/<slug>/issues` redirect in one step to the board narrowed to the
+project, and `/projects/<slug>/roadmap/R12` (the link a push notification, an
+email and the CLI write) opens that card over it.
 
 ## Lanes
 
@@ -108,9 +141,11 @@ severity.
 
 ### Writing
 
-**New card** and **File an issue** open one dialog. Choose *Roadmap card* or
-*Issue* at the top; an issue also asks how badly. Both ask for a title and
-nothing else. The body is where the work is, and a good one has three parts:
+**New card** and **File an issue** open one dialog. It asks **which project
+first** (preselected when one project is in view, otherwise the last one you
+made a card in; only projects where you may write are offered), then *Roadmap
+card* or *Issue*; an issue also asks how badly, and a card can name a section of
+that project. Both ask for a title and nothing else. The body is where the work is, and a good one has three parts:
 what this is and why, **Build** (what to build) and **Done when** (how anyone
 can tell it is finished). See [A card](/console/card/).
 
@@ -150,7 +185,8 @@ The filter row, left to right:
 - a search box (a number finds the card, `#runner` filters by tag);
 - chips for **Section**, **Sprint**, **Severity**, **Tag** and **Epic**;
 - **Mine**, **Updated** and **Overdue**;
-- **Organise by**, which draws lanes per project or per sprint;
+- **Organise by**, which draws lanes per project (across projects), per sprint,
+  by assignee or by section;
 - **Board** or **List**;
 - density, **Fields**, and your saved **Views**.
 

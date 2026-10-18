@@ -120,8 +120,8 @@ remembered for the next card on that board.
 ### The plan, and Done when
 
 A plan run writes the plan with **Plan this card**. **Write plan** (or **Edit
-plan**) opens the plan in an editor instead, which you can use on a card
-assigned to a person. Saving makes a new plan of record; the one before stays
+plan**, once there is one) opens the plan in an editor instead. It is there on
+any card you may edit (the **Edit cards** privilege), assigned or not. Saving makes a new plan of record; the one before stays
 under the earlier plans.
 
 Each `- [ ]` line under the plan's `## Done when` heading becomes an item of the

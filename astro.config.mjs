@@ -79,6 +79,7 @@ export default defineConfig({
 						{ label: 'Code: Quality, Git, Map, Changelog', slug: 'console/code' },
 						{ label: 'All projects', slug: 'console/portfolio' },
 						{ label: 'Teams and sprints', slug: 'console/teams' },
+						{ label: 'The team backlog', slug: 'console/team-backlog' },
 						{ label: 'Team access and privileges', slug: 'console/team-access' },
 						{ label: 'Project settings', slug: 'console/project-settings' },
 						{ label: 'Your settings', slug: 'console/your-account' },

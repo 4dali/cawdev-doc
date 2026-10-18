@@ -76,6 +76,13 @@ to.
 The browsers that are told when something is waiting on you, and which things
 reach you.
 
+<!-- WAITS: R533 -->
+A **branch reviewed** notification tells you when a review lands on a branch you
+wrote or are watching: the person who offered the branch, whoever started its
+coding run, the card's watchers and anyone `@`-mentioned in the review, but never
+the reviewer. It is on by default, and has its own **Push** and **Email**
+switches here like every other kind.
+
 ## Agent tokens
 
 A token can only grant what *you* currently hold. Since the privilege model, that

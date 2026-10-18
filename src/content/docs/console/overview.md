@@ -16,13 +16,18 @@ ones.
 | Group | Rows | Badge |
 |---|---|---|
 | *(no heading)* | Overview | none |
-| **Plan** | [Roadmap](/console/roadmap/), [Feedback](/console/feedback/) | Roadmap: issues nobody has triaged. Feedback: pieces still pending |
-| **Work** | [Development](/console/work/#development), [Runs](/console/work/#runs), [Insights](/console/work/#insights) | Development: branches waiting on you. Runs: running now |
+| **Plan** | [Feedback](/console/feedback/) | Feedback: pieces still pending |
+| **Work** | [Runs](/console/work/#runs), [Insights](/console/work/#insights) | Runs: running now |
 | **Code** | [Code](/console/code/) (Quality, Git and Map are its tabs), [Changelog](/console/code/#changelog) | none |
 | **Settings** | [Project settings](/console/project-settings/) | none |
 
-There is no Issues row: issues are cards on the Roadmap. Project settings is
-one row that stays lit on every one of its sections.
+There is no Roadmap or Development row inside a project: those two boards are
+[across projects](/console/portfolio/), and the project's Overview links to
+each, narrowed to the project. The rail across projects carries them, with the
+untriaged issues on Roadmap and the reviews and stopped work waiting on you on
+Development, added up over your projects. There is no Issues row either: issues
+are cards on the Roadmap. Project settings is one row that stays lit on every
+one of its sections.
 
 A badge means exactly one of two things:
 
@@ -74,7 +79,8 @@ recent ones as *3h ago*, with the full time on hover.
 
 The bottom bar is on every page you are signed in to, and always has five
 items. **Waiting** comes first, with the number in amber. Inside a project the
-rest are **Board**, **Runs** and **Development**; anywhere else they are
+rest are **Board** (the Roadmap narrowed to that project), **Runs** and
+**Overview**, with Development in **More**; anywhere else they are
 **Home**, **Live** and **Roadmap** across your projects. **More** is last and
 opens the drawer.
 

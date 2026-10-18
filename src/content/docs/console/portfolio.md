@@ -3,8 +3,10 @@ title: All projects
 description: The same boards, drawn over every project you are on, with the projects you pick in the address.
 ---
 
-Every board in the console belongs to one project. **All projects** puts the same
-boards over every project you are on, the way a Jira board spans projects.
+**There is one Roadmap and one Development board, and both are across
+projects.** A project has no board of its own: **All projects** puts the boards
+over every project you are on, the way a Jira board spans projects, and picking
+one project narrows the same board to it.
 
 ## Opening it
 
@@ -15,9 +17,11 @@ Roadmap`.
 
 ## Its own rail
 
-The rail has the shape of a project's: **Overview**, **Plan** (Roadmap,
-Feedback, **Sprints**), **Work** (Development, Runs, Insights). It adds two
-groups of its own:
+**Overview**, **Plan** (Roadmap, Feedback, **Sprints**) and **Work**
+(Development, Runs, Insights). Roadmap carries the issues nobody has triaged and
+Development the reviews and stopped work waiting on you, each added up over your
+projects. A project's own rail has no Roadmap or Development row. The rail adds
+two groups of its own:
 
 - **Projects**: one row per project of yours that is not archived, with its key
   and name, and a number when something is waiting on you there. The numbers are
@@ -28,10 +32,10 @@ groups of its own:
 | Page | What it shows |
 |---|---|
 | **Overview** | Waiting on you across the projects in view, **Live** (an orb for every run running), **Added up** (Roadmap, Issues, Development, Runs this week) and **The projects**, a table led by what needs you. Every number opens the page across projects it counts |
-| **Roadmap** | Every project's cards and issues on one board, one lane per project. `/portfolio/issues` opens it showing issues |
+| **Roadmap** | Every project's cards and issues on one board, one lane per project. `/portfolio/issues` opens it showing issues. See [The Roadmap](/console/roadmap/#one-roadmap-across-projects) |
 | **Feedback** | What is waiting to be triaged, project by project |
 | **Sprints** | Your teams' active sprints, and what is in none. See below |
-| **Development** | Every open branch, a lane per project, with batch merges per project |
+| **Development** | Every open branch, a lane per project, with batch merges per project. See [Development](/console/work/#development) |
 | **Runs** | Every run in the projects in view, newest first, with the project's key on every row |
 | **Insights** | Each median is worked out over all the runs together, never a median of each project's medians |
 
@@ -42,11 +46,33 @@ projects* is pressed when none is picked; each project is a chip with its key.
 The choice is in the address (`?projects=alpha,beta`), so a link shows the same
 board. With none picked you see every project of yours that is not archived.
 
+Pick exactly one project (or follow a link from its Overview) and the board
+also shows that project's own settings: column limits, saved views, **Manage
+sections**, the *Ready to release* link and the setup banner. The crumb names the
+project (`SaaS / Roadmap`). With none or several picked, those are hidden.
+Project chips show the project's name, not its slug.
+
 The same row holds the **Saved board** chip and **Save as board…**. A saved board
 keeps the projects you picked and every filter in the bar under a name, the way
 a Jira board is a saved filter. **Shared** boards are visible to everyone in at
 least one of their projects, each person seeing only the projects they are in.
 Only the person who saved a board can update, share or delete it.
+
+## Where the project boards went
+
+The old addresses redirect, each in one step, onto the board narrowed to the
+project with the card open:
+
+| Old address | Lands on |
+|---|---|
+| `/projects/<slug>/roadmap` | `/portfolio/roadmap?projects=<slug>` |
+| `/projects/<slug>/development` | `/portfolio/development?projects=<slug>` |
+| `/projects/<slug>/issues` | the Roadmap, `?projects=<slug>&kind=ISSUE` |
+| `/projects/<slug>/roadmap/R12`, `…/development/R12` | the card over the board, `?card=KEY-R12` |
+
+A card's own link, `/projects/<slug>/roadmap/R12`, is still what pushes, emails,
+SonarQube and the CLI write, and it keeps working. A branch's review page
+(`…/development/review/<id>`) and a card's graph are still pages of their own.
 
 ## Lanes per project
 
@@ -66,12 +92,12 @@ Dragging a card moves it there, Done and Not done are posted there, feedback
 accepted here becomes a card there, and a backlog card can only be filed into a
 sprint of a team its own project is shared with. Batch acts (priority, due date,
 estimate, **Start a run…**, batch merge) run one project at a time. Column
-limits and saved views stay on a project's own pages, because they are one
-project's.
+limits, saved views and **Manage sections** are one project's, so they appear
+only when one project is in view.
 
 **Making a card across projects.** *New card*, *File an issue* and *File
 feedback* ask which project first, offering only the projects in view you may
-file in, then the same fields as the project's own dialog. A column's quick add
+file in, then the card's fields (and, for a card, that project's sections). A column's quick add
 creates the card in the chosen project.
 
 You only ever see projects you are on. Naming a project you are not in shows

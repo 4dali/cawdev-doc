@@ -9,13 +9,30 @@ machine of yours carries out. This page is that path.
 
 ## Review
 
-A card in **Review** carries **Ask an agent**. It starts a run that reads the
-branch against what the card asked for and files what it found. It writes
-nothing, not the code and not the card's status, because Done is the reviewer's
-word and the one column no machine can supply. It asks you for nothing either:
-the model is whatever the card or your account defaults to, and it runs on the
-machine already holding that branch's checkout, because that is the only place
-the diff exists. The button is off while anything else is running on the branch.
+There are two ways to review a branch, and they are equals: **write a review**
+yourself, or **ask an agent** to read it. Both leave a row in the same list on
+the [review page](#the-review-page).
+
+**Ask an agent** starts a run that reads the branch against what the card asked
+for and files what it found. It writes nothing, not the code and not the card's
+status, because Done is the reviewer's word and the one column no machine can
+supply. It asks you for nothing either: the model is whatever the card or your
+account defaults to, and it runs on the machine already holding that branch's
+checkout, because that is the only place the diff exists. The button is off
+while anything else is running on the branch, and on a sprint's branch.
+
+**Write a review** opens a composer with `@` for the people on the project and an
+outcome:
+
+| Outcome | Does | Words |
+|---|---|---|
+| **Comment** | Leaves the branch where it is | required |
+| **Done** | Marks it done, through the same Done-when check as the button | optional |
+| **Not done** | Marks it not done; your words are the note the next run is given | required |
+
+**Done** and **Not done** are offered once the branch is in Review. You can
+correct your own review (**Edit**, then *edited* shows). Nobody else can, an
+agent's review is never edited, and nothing is deleted.
 
 ### The review page
 
@@ -23,6 +40,9 @@ A branch's review is a page of its own, at *Development › R318*
 (`/projects/<slug>/development/review/<itemId>`). It is reached from **Open
 review** on the run bar and on the tile (**See the review** once it is decided),
 and from the *To review* list on [Waiting on you](/console/live-and-waiting/).
+The board it came from is the [Development board across
+projects](/console/portfolio/), and **Back** returns to it narrowed to the
+project.
 
 The title is the branch's card with the Review chip, and **Open PR #531** is at
 the top right when the branch has a pull request. Under the run bar it has two
@@ -31,6 +51,16 @@ as a fold) and the reviewer's report with the commits as rows on the other. On a
 phone it is one column and the verdict comes first. It draws every state:
 waiting for you, *Reading*, decided by you, decided by somebody else, and
 *Finished. This project does not require a review.*
+
+### Reviews
+
+The **Reviews** box is one thread for the branch, newest first, whoever read it.
+While an agent reads it says *Claude is reading the branch…*, and when it
+finishes its report is a row (*Claude review · started by Moez · read in 4m*);
+if the agent stopped before saying anything the thread says why and offers **Ask
+again**. **Every verdict leaves a row**, from any door: a plain **Mark done**
+shows as one line (*Moez marked this done 3m ago*). Someone who can only view a
+project reads the thread and sees no buttons.
 
 ### The verdict
 
@@ -52,6 +82,15 @@ note is what the next run is handed *instead of* the card's original text. If
 the run could not be started, the message says why and offers **Start the fix
 run…**; the verdict stands either way.
 
+**Not done goes back to the author, or starts a fix run.** The note carries a
+checkbox, **Start a fix run with my note** (you need **Run agents**; a sprint
+branch has no card and no box). It is ticked for a branch an agent wrote and
+unticked for [a branch written by hand](#a-branch-written-by-hand): then Not
+done sends the work back to its author (*R318 sent back to Moez*) and starts
+nothing. Tick the box on a hand-written branch and the fix run starts as above;
+untick it on an agent's branch and the verdict stands with no run. The
+composer's **Not done** shows the same box.
+
 A verdict cannot be undone. It folds to one line (*Done · marked done by you ·
 just now*), and if somebody else got there first the panel says *Moez marked
 this done 3m ago. Nothing to decide.*
@@ -61,6 +100,25 @@ same branch carrying the note, and **Close** ends the work and asks where its
 cards go, back to **Considering** (the approach needs rethinking) or **Declined**
 (the idea is not going ahead, and the reason you give is the decline's own).
 Neither is Planned.
+
+### A branch written by hand
+
+A branch a person wrote and offered for reading has no run behind it, and the
+review page says so: *Written by hand by Moez · offered 2h ago* where the run
+would be.
+
+- **Link a pull request** takes the pull request's https address, for a branch
+  whose pull request cawdev has not found. (A machine reading the host also finds
+  one, such as a branch you opened a pull request for.) You need **Edit cards**,
+  and a sprint's branch is refused.
+- The **Commits** box, empty because no run committed, shows the **branch's
+  head** as the last reading of the repository saw it, and says the pull request
+  has the full diff.
+- A branch you move to Review by hand is offered for review whatever the
+  project's review rule says. It appears under **To review** on [Waiting on
+  you](/console/live-and-waiting/), where anyone who may act can **Start
+  reviewing** it, and a Not-done note on it is what the next agent session on the
+  card is told.
 
 ### The Done-when popup
 
@@ -176,8 +234,8 @@ normally.
 
 | Act | Needs |
 |---|---|
-| Give a verdict, **Close**, move a tile | **Edit cards** |
-| **Ask an agent**, **Fix it** | **Run agents** |
+| Write a review, give a verdict, link a pull request, **Close**, move a tile | **Edit cards** |
+| **Ask an agent**, **Fix it**, **Start a fix run with my note** | **Run agents** |
 | **Merge**, **Merge with an agent**, **Land the sprint branch** | **Merge** |
 | Release merged cards, name a sprint's branch | **Release** |
 
