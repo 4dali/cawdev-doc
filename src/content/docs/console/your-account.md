@@ -74,7 +74,7 @@ Which things tell you, and how. Every browser that agreed to be told is listed
 at the top, with the switch that turns notifications on for this one; every
 switch on the page acts at once and a message names what it did.
 
-Thirteen kinds, grouped as Runs, Cards, Reviews and Teams & access, each with three switches:
+Thirteen kinds, grouped as Runs, Cards, Reviews and Teams & access, each with:
 
 - **In app** keeps a row in your own feed, the one you can come back to. It is on
   for every kind. Turning it off stops the rows, not the push or the mail.
@@ -89,19 +89,25 @@ Thirteen kinds, grouped as Runs, Cards, Reviews and Teams & access, each with th
 
 You are never told about something you did yourself.
 
-| What happened | Who hears it | Push | Email |
+| Kind | Who hears it | Push | Email |
 |---|---|---|---|
-| A card is assigned to you, or taken off you (*Assigned*) | The new assignee; the previous one hears *took you off* | on | off |
-| A card you filed, watch, are assigned or commented on moves: Merged, Shipped, Declined with its reason (*Card moved*) | Those people, the person who filed it included | on | off |
-| A comment on a card you follow, or a mention of you in one (two kinds: *Commented* and *Mentioned*) | Those people | on | off |
-| A branch you wrote or watch is reviewed, or marked Done or Not done (*Branch reviewed*) | Its author, the cards' watchers and anyone named | on | off |
-| A review is handed to you by name (*Review handed to you*) | The person it was handed to (an unassigned request is every member's, and tells nobody) | on | off |
-| A question is waiting, or a permission request is | Whoever can answer it (two kinds: *Question* and *Permission request*) | on | off |
-| A run you started finishes (*Run finished*) | You | off | off |
-| A run you started fails (*Run failed*) | You | off | off |
-| Your team's sprint starts or completes (two kinds: *Sprint started* and *Sprint completed*) | The team's members | off | off |
-| You are added to a project or a team, your role changes, or a project is shared with your team (*Access changed*) | You; for a share, the team's members | off | off |
-| Feedback you filed becomes a card or an issue, or is declined (*Feedback accepted* and *Feedback declined*) | You, with the reason if one was given | off | off |
+| **Runs** | | | |
+| A question is waiting on you | Whoever can answer it | on | off |
+| A permission request is waiting on you | Whoever can answer it | on | off |
+| A run you started has finished | You | off | off |
+| A run you started has failed | You | off | off |
+| **Cards** | | | |
+| A card you watch moved | Those who filed, watch, are assigned to or commented on it; Merged, Shipped and Declined (with its reason) | on | off |
+| Somebody commented on a card you watch | The card's followers | on | off |
+| Somebody mentioned you in a comment | The person mentioned | on | off |
+| A card was assigned to you, or taken off you | The new assignee; the previous one hears *took you off* | on | off |
+| Feedback you filed was accepted or declined | You, with the reason if one was given | off | off |
+| **Reviews** | | | |
+| A branch you wrote or watch was reviewed | Its author, the cards' watchers and anyone named; also when it is marked Done or Not done | on | off |
+| A review was handed to you | The person it was handed to (an unassigned request is every member's, and tells nobody) | on | off |
+| **Teams & access** | | | |
+| Your team's sprint started or completed | The team's members | off | off |
+| Your access to a project or team changed | You, when added to a project or a team or your role changes; for a share, the team's members | off | off |
 
 Not told on purpose: being removed from a project or a team, a new issue (the
 Roadmap's untriaged count says so), a card added to a sprint (its history says
