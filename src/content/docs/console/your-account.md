@@ -9,10 +9,10 @@ defaults, and the tokens and machines you own. It lives at `/settings`.
 
 ## The layout
 
-<!-- WAITS: R521 -->
 The same layout as [Project settings](/console/project-settings/#the-layout):
 the menu on the left, one pane beside it, one address per section. The page
-heading is **Settings**, and each pane starts with its name and a sentence.
+heading is **Settings**, and each pane starts with its name, in the pane's own
+head, and a sentence.
 
 | Menu | Holds |
 |---|---|
@@ -20,7 +20,7 @@ heading is **Settings**, and each pane starts with its name and a sentence.
 | **Password** | Change your own |
 | **Passkeys** | Sign in with your device |
 | **Defaults** | Your default agent, and a model and effort per agent |
-| **Notifications** | The browsers told when something waits for you |
+| **Notifications** | What tells you, by which channel, and the browsers told |
 | *Access* — **Agent tokens** | Tokens you have minted for agents |
 | *Access* — **API tokens** | Tokens for your own applications, and their webhooks |
 | *Access* — **Machines** | The computers that run agents for you |
@@ -36,9 +36,6 @@ heading is **Settings**, and each pane starts with its name and a sentence.
 - Going away with an unsaved username asks first (*Leave without saving?*).
 - **On a phone** `/settings` is a list of menus under two headings, with a
   **‹ Settings** link back from a pane.
-
-If your instance predates this layout you will see the same sections one at a
-time beside the menu, with Password as the landing section.
 
 ## Account
 
@@ -73,15 +70,70 @@ to.
 
 ## Notifications
 
-The browsers that are told when something is waiting on you, and which things
-reach you.
+Which things tell you, and how. Every browser that agreed to be told is listed
+at the top, with the switch that turns notifications on for this one; every
+switch on the page acts at once and a message names what it did.
 
-<!-- WAITS: R533 -->
-A **branch reviewed** notification tells you when a review lands on a branch you
-wrote or are watching: the person who offered the branch, whoever started its
-coding run, the card's watchers and anyone `@`-mentioned in the review, but never
-the reviewer. It is on by default, and has its own **Push** and **Email**
-switches here like every other kind.
+Each kind of thing you can be told about has three switches:
+
+- **In app** keeps a row in your own feed, the one you can come back to. It is on
+  for every kind. Turning it off stops the rows, not the push or the mail.
+- **Push** sends a notification to your browsers. It carries the project and
+  what is waiting, never the question or what an agent wrote, because a
+  notification sits on a lock screen.
+- **Email** sends one mail with the same words and a link. It is off for
+  everything until you turn it on. If the column is greyed out with *Mail is not
+  set up on this instance*, ask your administrator.
+
+### What tells you, and who
+
+You are never told about something you did yourself.
+
+| What happened | Who hears it | Push | Email |
+|---|---|---|---|
+| A card is assigned to you, or taken off you | The new assignee; the previous one hears *took you off* | on | off |
+| A card you filed, watch, are assigned or commented on moves (Merged, Shipped, Declined with its reason) | Those people, the person who filed it included | on | off |
+| A comment on, or a mention in, a card you follow | Those people | on | off |
+| A branch you wrote or watch is reviewed, or marked Done or Not done | Its author, the cards' watchers and anyone named | on | off |
+| A review is handed to you by name | The person it was handed to (an unassigned request is every member's, and tells nobody) | on | off |
+| A question or a permission request is waiting | Whoever can answer it | on | off |
+| A run you started finishes | You | off | off |
+| A run you started fails | You | off | off |
+| Your team's sprint starts or completes | The team's members | off | off |
+| You are added to a project or a team, your role changes, or a project is shared with your team | You; for a share, the team's members | off | off |
+| Feedback you filed becomes a card or an issue, or is declined | You, with the reason if one was given | off | off |
+
+Not told on purpose: being removed from a project or a team, a new issue (the
+Roadmap's untriaged count says so), a card added to a sprint (its history says
+so), and a run you stopped yourself.
+
+A **branch reviewed** notification goes to the person who offered the branch,
+whoever started its coding run, the card's watchers and anyone `@`-mentioned in
+the review, but never the reviewer.
+
+### The bell and the notification centre
+
+The bell in the top bar opens your unread notifications over the page you are
+on. The **notification centre**, at `/notifications`, is the same feed as a page,
+with three tabs:
+
+| Tab | Shows |
+|---|---|
+| **Unread** | What you have not read |
+| **All** | Everything kept for you |
+| **From cawdev** | Announcements from your administrator |
+
+Beside the tabs are a project filter and a kind filter. Rows sit under a
+heading for each day, with **Load older** at the end, and a read or unread
+button on every row. What you have not read carries a dot and the word *New*.
+Opening the page marks nothing read; opening a row does.
+
+A question or a permission request that is answered, and a run notice you have
+looked at, mark their rows read by themselves, so the feed never says something
+is waiting on you when Waiting on you says it is not. A row shows only while you
+can still see what it is about: leave a project or a team and its rows go from
+your feed and your count. Read rows are kept 30 days, everything 90, and at most
+1000 per person.
 
 ## Agent tokens
 

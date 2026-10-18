@@ -251,8 +251,10 @@ block for one that has. Links to your own
 The release procedure above the versions table: which files a release run may
 write and which `node` commands regenerate the [exports](/console/exports/). A
 version (`v1.2`) is defined here and nowhere else: a card's **Version**, the
-release dialog and an agent's `targetVersion` all pick from this list. Text
-fields on this section go through the save bar.
+release dialog and an agent's `targetVersion` all pick from this list. On a
+version that has shipped, its count opens what shipped in it, and what was only
+aimed at it ([Changelog](/console/code/#changelog)). Text fields on this
+section go through the save bar.
 
 ### Quality
 

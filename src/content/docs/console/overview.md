@@ -67,7 +67,13 @@ A 48px bar, left to right:
   the tail of what its session is doing. The glyph moves, and its number counts
   what is running, only while something is. The menu ends with **See all live
   sessions**.
-- **The bell**, notifications, with a badge for what you have not seen.
+- **The bell**, your unread notifications in a panel, with a badge for what you
+  have not read plus announcements you have not seen. A row shows who did what,
+  to which card, in which project and how long ago, with an avatar for a person
+  and the sparkle for a session or an agent token. Clicking a row marks it read
+  and takes you to the thing itself. **Mark all read** clears the list and
+  **Open notification centre** goes to the [page](/console/your-account/#the-bell-and-the-notification-centre).
+  On a phone the bell is a plain link to that page.
 - **The avatar**, your account menu: **Settings**, **Administration**
   (administrators only), **Documentation**, **Send feedback**, the theme (dark,
   light, or follow the system; the console is dark-first) and sign out.
@@ -101,8 +107,9 @@ window, with results grouped under a heading and a count (*Pages 12*).
 
 ## Starting work without a page
 
-The home page, and a floating **Start a run** button everywhere else (or
-**⌘⇧↵** / **Ctrl+⇧+↵**), open the composer. On a card the button opens the
+The floating **Start a run** button on every page, the key `c`, and
+**⌘⇧↵** / **Ctrl+⇧+↵** open the composer from anywhere. The home page,
+[All projects](/console/portfolio/), has no composer of its own. On a card the button opens the
 start dialog for that card instead; see [A card](/console/card/#start-a-run).
 
 The composer offers five things to do, as chips, one at a time (**⌘/** walks

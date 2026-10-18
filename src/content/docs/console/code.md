@@ -109,6 +109,12 @@ project knows, how many cards aim at it, and whether it has shipped, with
 **Define a version**. It is the same table as under *Project settings →
 Versions*.
 
+On a version that has shipped, its count opens a list of what shipped in it:
+every card and issue released into that version, each row opening its card. The
+list also shows, separately, the cards that were only aimed at the version and
+were not released in it. On an upcoming version the count opens the Roadmap
+narrowed to that version.
+
 ### Releasing
 
 The **Ready to release** panel lists every merged card and merged issue, one row

@@ -10,9 +10,13 @@ one project narrows the same board to it.
 
 ## Opening it
 
-**All projects** is last in the project switcher's menu (the arrow beside the
-project's name in the top bar), and `⌘K` finds it as "across projects". It opens
-on `/portfolio/overview`. On a page across projects the crumb reads `All projects /
+**All projects** is your home page: `/` opens it, and so does the cawdev mark in
+the top bar. It is also last in the project switcher's menu (the arrow beside
+the project's name), and `⌘K` finds it as "across projects". The page is
+`/portfolio/overview`, in one column on a phone. Top to bottom it holds Waiting
+on you (not there at all when nothing waits), the live sessions as orbs, the
+added-up strips, and **The projects**, one row each with the one that needs you
+first. There is no composer on the page; it opens from any page, as below. On a page across projects the crumb reads `All projects /
 Roadmap`.
 
 ## Its own rail

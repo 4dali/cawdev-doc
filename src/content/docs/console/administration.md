@@ -8,14 +8,22 @@ no row for it on any project's rail, because none of this is about a project.
 The whole area sits behind an administrator guard, so being able to reach a
 section at all *is* what marks it as administration.
 
-<!-- WAITS: R523 -->
 It is drawn in the same frame as [Project settings](/console/project-settings/#the-layout)
 and [Your settings](/console/your-account/): a menu on the left, one section at
-a time in the pane beside it at `/admin/<section>`, a heading and a sentence on
-each. On a phone the menu is a list. A section that fails to load says so in a
-banner with **Try again**, and a table that has loaded keeps its last good rows
-beside the error. Until that layout ships, the same sections are one at a time
-beside a plain section list, or a select on a phone.
+a time in the pane beside it at `/admin/<section>`, and the section's name and a
+sentence in the pane's head. The menu has three groups: **Users** and
+**Projects**; then **Instance** (**Platform**, **Mail**, **Notifications**);
+then **Software** (**Plugins**, **Updates**). On a phone the menu is a list of
+its own, with a **‹ Administration** link back from a section. A section that
+fails to load says so in a banner with **Try again**, and a table that has
+loaded keeps its last good rows beside the error.
+
+Saving works as it does in project settings. A **switch or a choice** (who may
+create projects, every run names its machine) takes effect at once and a
+message says so. A **field** (the minimum CLI version, the whole of **Mail**) is
+kept until you press **Save settings** in the bar at the bottom, which counts
+the changes and names the menus. A menu with changes shows a dot, you can look
+at another menu meanwhile, and leaving Administration with changes asks first.
 
 | Section | Covers |
 |---|---|
@@ -97,8 +105,62 @@ platform news. Confirmed with a snackbar.
 
 ## Updates
 
-The version this instance is running, what has been published since, and a
-button to install the newest. Installing goes through the updater sidecar, the
-one process allowed to restart cawdev: it pulls the new images while the old
-ones serve, stops the API, takes a database dump and starts the new version.
-The API never holds the container socket itself.
+The version this instance runs, and when cawdev last looked for newer ones. It
+looks by itself at most once an hour; **Check for updates** looks now and says
+in a message whether a newer version exists. Pressing it again within a minute
+returns the last answer (*Checked a moment ago*), so Docker Hub's and GitHub's
+limits hold. The button is not drawn when checking is switched off
+(`CAWDEV_UPDATE_CHECK=false`), and it waits while an update is under way.
+
+**Update** installs the newest version through the updater sidecar, the one
+process allowed to restart cawdev: it pulls the new images while the old ones
+serve, stops the API, takes a database dump and starts the new version. The API
+never holds the container socket itself. The History table lists updates and
+restores together.
+
+### Restore a previous version
+
+**Restore a previous version** lists the database backups the updater holds, one
+of which is taken before every update. Each row shows the version it is of, when
+it was taken and which update it was taken for. **Restore v…** on a row asks
+three times: a question, a warning, and then you type the version (`v1.2.0`)
+exactly.
+
+What a restore does, in order: the updater pulls that version while the current
+one still serves, stops the API, takes a backup of the database **as it is now**
+(the undo), loads the chosen backup and starts that version. If the restore
+fails, or the version never answers, the undo backup goes back and the current
+version is started again.
+
+- **Everything written since that backup is lost**: projects, cards, runs, users,
+  passwords, tokens and settings go back to how they were then.
+- **Everybody is signed out**, you included, and signs in with the password they
+  had at that time.
+- **The undo.** The backup taken just before the restore appears in the same
+  list, and restoring it undoes the restore. It is newer than the running
+  version, and is offered the same way. The undo backup of the latest restore is
+  never pruned.
+- **Not offered** for a backup of the version running now, for one older than
+  v1.0.12-beta (the first version that can record a restore; those are restored
+  by hand), or while an update is under way. The row says why.
+
+There is no code-only downgrade: an older API on a newer database would start,
+because Flyway ignores migrations it does not know. A restore always brings the
+data back with the code.
+
+**The updater must be pulled once by hand.** Restore needs an updater from the
+release that added it; an older one lists no backups. The updater does not update
+itself, so on the host run:
+
+```sh
+docker compose pull updater && docker compose up -d updater
+```
+
+**How many backups are kept.** `CAWDEV_BACKUPS_KEEP` in the updater's `.env`
+sets it; the default is 5.
+
+**Restoring by hand.** For a backup older than v1.0.12-beta, or should a restore
+itself fail, the backup files live in the updater's volume (named
+`<compose project>_updater-state`, under `backups/`) as gzipped SQL. Stop the
+API, empty the `public` schema, load the file into the database and start the API
+again; the cawdev repository's `PRODUCTION-DEPLOYMENT.md` has the commands.

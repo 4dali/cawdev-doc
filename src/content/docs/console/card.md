@@ -162,8 +162,14 @@ stops proposing it again.
   **Edit cards** privilege.
 - A comment written by an agent carries the [AI mark](#the-ai-mark), which says
   who wrote it.
-- `R12` links a card and `@name` tells somebody on the project. Everyone who
+- `R12` links a card and `@name` tells somebody on the project. After `@` the
+  composer offers the people on the project by picture, name and `@username`;
+  type part of either to narrow, and pick with the arrow keys and Enter. The
+  person is told once, as a mention and not again as a comment. Everyone who
   **Watches** the card is told as well.
+- A mention of somebody on the project is drawn as a person chip, their avatar
+  and name (hover for the `@username`), in a comment and in a review. A name
+  that is nobody on the project stays as typed, and code is never touched.
 - You can correct your own wording and the comment is marked as edited. Nobody
   can edit anybody else's, an administrator included. There is no delete.
 
