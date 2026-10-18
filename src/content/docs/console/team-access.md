@@ -57,7 +57,6 @@ create later**, in one switch, with nothing copied. A few rules:
 
 ## The Projects table
 
-<!-- WAITS: R515 -->
 On a team's page (`/teams/<id>`), the last block of the main column is
 **Projects**, with the line *What {team}'s people can do on each project you own.
 Changes wait until you save.* It replaces the old team-side Share button and
@@ -104,9 +103,8 @@ A project you cannot see is a plain 404. A project you can see but lack a
 privilege on is a 403 that names it: *This needs {privilege} on {project}; you can
 {list}.* The console hides or disables what the API would refuse.
 
-<!-- WAITS: R519 -->
-Until the console catches up with the API, a few buttons (Merge, Release,
-settings) are still offered to owners only.
+Merge, Release and the settings sections are offered by the privilege each
+needs (*Merge*, *Release*, *Manage settings*), not to owners only.
 
 ## Tokens follow privileges
 

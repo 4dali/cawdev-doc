@@ -62,7 +62,7 @@ belong to.
 
 - From the project: [Project settings → People](/console/project-settings/#people)
   → **Share with a team…**.
-- <!-- WAITS: R515 --> From the team: the **Projects** table on its page, which
+- From the team: the **Projects** table on its page, which
   also covers *every project I own, including new ones*.
 
 A share gives the team's people a role or privileges on the project, **never

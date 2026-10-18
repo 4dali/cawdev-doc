@@ -11,7 +11,6 @@ own address beneath it (`…/settings/rules`, `…/settings/people`).
 
 ## The layout
 
-<!-- WAITS: R473 -->
 Two columns. The **menu** is on the left and the **pane** beside it shows one
 section only: choosing a menu replaces the pane, nothing else is on the page
 and nothing scrolls past it. The first group holds the core sections; a second
@@ -33,11 +32,6 @@ what it is for; many add a **Learn more** link to this page.
   `/playbook`, `/setup?step=machine`) still work and land on the section they
   became.
 
-Before R473 the core sections stacked on one scrolling page and each Advanced
-section stood alone; if your instance has not yet been upgraded to the
-release that carries the new layout, that is what you will see, with the same
-sections and the same words.
-
 ### Saving
 
 A dark bar at the foot of the pane reads **n changes not saved · Discard ·
@@ -57,10 +51,9 @@ settings**. Who is on the project, sharing it with a team, archiving and
 deleting it stay with the project's direct owners. Everybody else reads the
 same sections as text, with a line saying so.
 
-The API has checked privileges this way since R511. <!-- WAITS: R519 --> The
-console still offers settings to owners only until it catches up; a person who
-holds *Manage settings* through a role other than owner may see switches
-disabled that the API would accept.
+The console follows the same privileges as the API: a person who holds *Manage
+settings* through a team or a custom set is offered the settings sections, the
+Quality and Releasing fields, and the rest, not only the owners.
 
 ## Core sections
 
@@ -193,7 +186,6 @@ or ask the team's owner to take them out. See
 | Writer · through dali's all projects | Covered by an owner's [all-projects grant](/console/team-access/#all-my-projects) |
 | No access here · switched off for this project | The grant is excluded for this project |
 
-<!-- WAITS: R516 -->
 An owner's row menu offers, by kind of row: **Change…** and **Stop sharing…**
 (a share); **Give it its own access…** and **Switch off for this project** (an
 all-projects grant); **Change…** and **Follow all projects** (an exclusion).
