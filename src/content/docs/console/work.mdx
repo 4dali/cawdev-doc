@@ -1,112 +1,225 @@
 ---
-title: "Work: Development and Sessions"
-description: The board of branches being worked, the sessions doing the work, and what they cost.
+title: "Development, runs and insights"
+description: The board of branches being worked, the runs doing the work, and how long they take.
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 
-**Plan** is what we intend. **Work** is what's actually happening: which
-branches are moving, which sessions are running them, and what that's costing.
+The [Roadmap](/console/roadmap/) is what we intend. **Work** is what is actually
+happening: which branches are moving, which runs are working them, and how long
+that takes. A **run** is one agent session on one task; the console says *run*
+wherever it says Runs.
 
 ## Development
 
-A board of **branches**, not cards — a card names the work, a branch is where
-it's being done, and one branch can carry several cards. Five columns:
+A board of **branches**, not cards, and like the Roadmap it is **across
+projects**: it opens at `/portfolio/development` over every project you are on,
+a lane per project (an empty one too), and a project has no board of its own.
+Pick one project and it narrows to it, opens by status, and shows that project's
+saved views and column limits (a column's menu has *Set a limit…* if you hold
+*Manage settings*). A card names the work, a branch is where it
+is being done, and one branch can carry several cards (the board shows one tile
+listing them in order, with the state of each). A tile carries the sparkle that [marks what an agent wrote](/console/card/#the-ai-mark)
+when a coding run wrote the branch; a branch you opened by hand has none.
+Five columns, from the
+`WorkItemStatus` a branch's work item carries:
 
 | Column | Means |
 |---|---|
-| **Ready** | Created; nothing has run on it yet |
-| **Coding** | Being worked, by an agent or by a person — these are shown separately: a session running is one badge, someone having claimed the branch is the column |
-| **Review** | The last run finished and someone has to read it (only reached automatically in a project that requires review — see [Rules](/console/project-settings/)) |
-| **Done** | Reviewed and accepted, or a project with no review requirement's run finished cleanly |
-| **Not done** | Sent back with a note — not simply "Coding" again, because the next session is handed that note instead of the card |
+| **Ready** | Started; nothing is on the branch yet |
+| **Coding** | A run is writing it, or a person has taken the branch |
+| **Review** | Written, and waiting for somebody to read it |
+| **Done** | A reviewer said it is what was asked for. **Merge** is on the tile |
+| **Not done** | Sent back with a note. Fix it, or close it |
 
-All five accept a drop, but who may move what differs: a **person** moves a
-branch when no session is on it; the **platform** moves it while one is. Two
-buttons stay buttons rather than becoming drags, because each carries
-something a drag can't:
+A branch moves through the first three by itself when an agent does the work:
+starting a run puts it in Ready, a machine picking it up makes it Coding, and
+the run finishing makes it Review. When nothing is running on it you can drag it
+yourself, so work you write by hand belongs here as much as an agent's. While a
+run is on a branch, the run moves it and the tile says so.
 
-- **Ask an agent to review** (in Review) — starts a review session against the
-  branch, with nothing chosen: model and effort blank means Auto, and it runs
-  on whichever machine already holds the checkout, since that's the only place
-  the diff is.
-- **Done** / **Not done…** — the human verdict. Not done asks for a note, which
-  the next session receives *instead of* the card, and offers two
-  destinations for the branch's cards: back to Considering (the approach needs
-  rethinking) or Declined (not doing this — the note becomes the reason).
-- **Merge…** (in Done, owners only) — queues the merge on one of *your*
-  machines. cawdev holds no git credentials, so this always happens on a
-  runner you own, and the cards move to Merged once that machine reports the
-  pull request landed. A branch merged **outside** cawdev — a pull request
-  merged on GitHub, a `git merge` by hand — is noticed the same way: the next
-  time a runner reads the branch, every card still In development on it moves
-  to Merged on its own, with a note on the card saying which machine saw it.
-- **Fix it** (in Not done) — starts a fresh session carrying the rejection
-  note.
+A tile says whether anything is happening on it. The quiet count beside the
+comment count is history (how many runs there have been). The coloured badge is
+now: **Running**, **Waiting** for an answer, **Queued** with its place, or
+**Stalled** (the run was started for a machine that is not up).
 
-## Sessions
+- **Filters** (search, Machine, Sprint, Updated and **Organise by** status,
+  project or sprint) live in the address, so a reload, a link or a saved board
+  keeps them.
+- **Show finished** (in the page head) brings the closed branches back as a list
+  under the board, each opening its card.
+- The board **refreshes by itself** every few seconds. It rests on a hidden tab
+  and while a card, a dialog or a move is open.
+- A tile of a card in a team sprint carries a **sprint chip**, and `→
+  s1-notifications` after the branch name when the sprint has a branch of its
+  own. See [Teams and sprints](/console/teams/).
+- **Organise by sprint** and the sprint chip (`?sprint=`) are offered once the
+  project has a sprint.
+- **Take this card** is on a tile in Ready: it says "this one is mine, I'll
+  write it" and shows you the commands to put the branch on your machine.
+- **Create branch** (from a card, or from the Git tab) asks a machine of yours
+  to cut a branch from any branch. A branch cut from something other than the
+  usual base is *stacked*, and its pull request targets the source.
 
-Every agent session the project has had, live and finished.
+The verdict, the merge and a conflict have a page of their own: [Review, verdict
+and merge](/console/review-and-merge/). In short, **Ask an agent** reads a branch
+in Review without writing anything; **Done** and **Not done…** are the human
+verdict (Not done needs a note, and **Send it back** starts a fix run on the
+branch's last machine); **Merge** lands a Done branch; and from Not done,
+**Close** ends the work and asks where its cards go.
+
+What you may do here follows your access to the project: moving a tile needs
+**Edit cards**, starting a run **Run agents**, and merging **Merge**. A control
+you lack is not drawn. See [Team access and
+privileges](/console/team-access/).
+
+## Runs
+
+The **Runs** page lists every run the project has had, live and finished, drawn
+the same way under [All projects](/console/portfolio/). One row per run:
+
+- a glyph and a word for its state: *Finished*, *Failed*, *Stopped*,
+  *Cancelled*, *Queued*, *Coding* (or *Planning*, *Reviewing*), and *Asking
+  you* in amber;
+- the card's ref and title, or the run's label when it has no card;
+- a line saying what it is: the kind, the machine, how long it took and the
+  tokens, or *the machine went away*, *holds its checkout*, *merged in #528*;
+- when it ended at the right.
+
+The **tabs** choose a part of the list. **Live** is what a machine is working
+on, what is stopped with its checkout, what is scheduled, and the queue
+(*Waiting to start*, in the order it will be taken, with **Hold** / **Release**
+and arrows to reorder). **Finished** is what is over. **All** is both, and is
+where the page opens. Chips narrow it by kind (*Plan*, *Coding*, *Merge*…),
+*Ended* (*Any way*, *Finished*, *Failed*, *Cancelled*) and *Started by me*. The
+search, the kind and the tab are in the address, so a link shows the same list.
+
+**Start a run** is the header's one button, and `s` does the same from anywhere
+on the page but a text box. The page polls while anything is live and rests on a
+hidden tab.
+
+### Starting one
 
 <Steps>
 
-1. Start one from a card ("Start development…"), from the Development board,
-   or from the [composer](/console/overview/#starting-work-without-a-page).
-   The branch name is pre-filled following the project's convention
-   (`r12-slug-of-title`) — change it if you know better.
+1. Start one from a card (**Start a run**), from the Development board, from the
+   floating **Start a run** button, or from the
+   [composer](/console/overview/#starting-work-without-a-page). The branch name
+   is pre-filled following the project's convention (`r12-slug-of-title`).
+   Change it if you know better.
 
-2. A [runner](/cli/runner-daemon/) claims it off the queue; the session moves
-   to **Running**. You don't pick which machine — runners *claim* work rather
-   than being assigned it, so what matters is whether anything is listening,
-   and the console shows you that rather than asking you to guess.
+2. A [runner](/cli/runner-daemon/) claims it off the queue and the run moves to
+   **Running**. You choose a machine in the dialog (*Runs on*), because the run
+   edits that machine's checkout and pushes with its credentials. A machine that
+   is not live is still a legal choice: the run waits for it.
 
-3. The agent moves its card itself — the console never does. That's
-   deliberate: a card's status means "someone is actually working on this",
-   not "someone queued this".
+3. The agent moves its card itself; the console never does. A card's status
+   means "someone is actually working on this", not "someone queued this".
 
 4. Progress arrives as it happens, in a live terminal. If a decision is
-   genuinely yours, it **asks and stops** — you'll see the question inline, or
-   in the [Inbox](/console/overview/#the-top-bar) from anywhere in the
-   console.
+   genuinely yours, it **asks and stops**, and the question appears inline and
+   on [Waiting on you](/console/live-and-waiting/).
 
 </Steps>
 
-:::tip[Nothing sweeps a session waiting on you]
-A session stalled on a person is correct, and a person may reasonably take a
-day. What *is* swept is a session whose **runner** goes quiet — that one fails
-with a reason saying so, rather than sitting `Running` forever.
+:::tip[Nothing sweeps a run waiting on you]
+A run stalled on a person is correct, and a person may reasonably take a day.
+What *is* swept is a run whose **machine** goes quiet for five minutes: that one
+fails with a reason saying so, rather than sitting *Running* forever.
 :::
 
-**A project runs one live session per working copy at a time** — sessions
-share a checkout, so a second one on the same branch is refused, readably. A
-project with several checkouts of the same repository can run that many
-sessions in parallel.
+A machine works one coding run per **checkout**, not per project. A run that has
+to wait says so plainly (*no free workspace*), and the log says which gate
+refused it. Asking a question never waits: it takes no checkout, and reads the
+default branch in a copy of its own beside the first checkout.
 
-**Cancel** reaches the runner on its next poll and takes down the whole
-process tree an agent started — a build it kicked off doesn't get left
-running. Anything already committed stays committed; cancelling and re-running
-means a *new* session, keeping the record of what actually happened.
+### The run page
 
-A stopped session offers up to four things, depending on what its working copy
-holds:
+The top of a run page is one **run bar**: what the run is doing (*Coding*,
+*Waiting on you*, *Stopped*, *Failed*, *Finished*), where
+(`R354 on r354-cut-over · dali-vm · Claude Code, Opus · 12m`), the uncommitted
+changes, and the buttons you may use. Amber means one thing, a run waiting on a
+person, and then the bar carries **Answer**. A run that has printed nothing for
+a minute says **quiet for 6m**; cawdev says so and never stops it.
+
+Under the bar the **stages** are one row: done (a check and how long), the
+current one, a gate waiting for you (*Approve the plan*), failed. Press a stage
+to open what it wrote, the model it ran on and what it spent.
+
+When the run is waiting on a question, a plan gate or a permission request, it
+is shown above the session, not below it.
+
+**Stop** asks once and pauses the run; the checkout is kept and you can carry on
+later. **Cancel this run…**, behind the **⋯** menu, ends it for good and asks
+what to do with the uncommitted work. A run you resumed says **Close the
+session** instead, because it was going well and was being held open for you.
+
+A stopped or failed run explains itself in one panel (*Stopped · usage limit*,
+*Failed · the machine went away*). Stopped is slate and never means failed. Up
+to four things are offered, depending on what its working copy holds:
 
 | Action | Does |
 |---|---|
-| **Carry on** | Resume on the same machine, or the runner that's free |
-| **Hand off…** | Push the branch, send the uncommitted tree as a patch, and free the checkout for something else — the next session picks the patch up on a fresh runner |
-| **Start over** | Discard, reset the checkout, and start a fresh session in the same slot |
-| **Discard** | Drop the uncommitted work and free the checkout, ending resumability |
+| **Carry on** | Resume on the same machine, or the one that is free |
+| **Hand off…** | Push the branch, send the uncommitted tree as a patch and free the checkout for something else. The next run picks the patch up on a fresh machine |
+| **Start over…** | Reset the checkout to the last pushed commit and begin the card again as a new run |
+| **Discard…** | Drop the uncommitted work and free the checkout, ending resumability |
+
+Each of the last three asks first, in a dialog that names what is lost. These
+are the starter's: on someone else's run the panel says whose it is instead of
+offering a button that would be refused.
+
+A live run has a **prompt box** under its session. Type and press Enter to send
+it into the running process: the same run, the next turn. While the run is
+waiting on a question the prompt box is closed, with a link to the question, and
+reopens once it is answered. Once a run has ended, an Ask, Audit or Plan offers
+**Ask a follow-up…** from where the prompt box was.
+
+Down the side are folds: *What it reported*, *Allowed for the rest of this run*,
+*Details* (who started it, the machine, the agent, model and effort, the tokens,
+the commits). **Commit…** on a run you opened by hand commits its work and, if
+you give it a name, creates a card for it. That button never pushes. A finished coding run on a card, by contrast, commits
+and pushes its own branch as its last step.
+
+**On a phone** the run page is the brief, not the session: the bar, who
+started it, *Is this done?* if a verdict waits, anything the run is asking, the
+stages in one row, the last thing it said, and **Open the session** for the
+whole terminal. The session is never loaded until you open it, which spares your
+data.
 
 ### Permission requests
 
-A session that hits something no standing rule covers stops and asks, rather
-than being silently denied or silently allowed. Answering it from the run page
-offers the three lengths of yes cawdev's CLI offers at the terminal — once,
-for the rest of this run, or as a standing project rule — so a decision made
-here can outlive the session that asked it.
+A run that hits something no standing rule covers stops and asks, rather than
+being silently denied or allowed. It appears on [Waiting on
+you](/console/live-and-waiting/) and on the run page, and answering it offers
+three lengths of yes: once, for the rest of this run, or as a standing project
+rule, so a decision made here can outlive the run that asked. A request that
+nobody answered for the project's wait (set in [Project
+settings](/console/project-settings/#permissions)) can still be allowed from the
+run page afterwards.
 
 ## Insights
 
-The retrospective numbers: how long planning and coding actually take on this
-project, and what a session costs in tokens. It sits after Sessions because
-it's *about* them — the totals of what's above.
+The retrospective page: how the runs that *ended* in a window went. The head is
+one row: the window as three buttons (**7 days**, **30 days**, **This month**;
+30 days by default) and a quiet **Refresh**. The page does not update by itself.
+
+- The banner says how many runs were counted and what was not: runs still
+  running, waiting on you or stopped have no length yet. Every figure is a
+  **median**, never an average, because one stuck run poisons an average.
+- **Four tiles**: *Runs ended*, *Finished* (a share, with the cancelled and
+  failed beneath), *Tokens in* and *Tokens out*, each with the change against the
+  window before and a bar for each day.
+- **Two charts**, day by day: how the runs ended, and the tokens in and out.
+- **How long each stage takes**: Plan, Verify, Implement, Test and Memory, each
+  with its median and *n of m*, how many of the window's runs reported it. A
+  median of two is not a fact about a project, so the sample is always beside
+  it. **Waiting** draws the time a run stood still for a person and for a
+  machine.
+- **More figures** folds away everything else: how long a whole run takes, what a
+  run uses, how they ended and why the failed ones failed, what a card takes, and
+  the days as a table.
+
+There is no money on this page: the platform is not told what anything cost.
+Across projects, each median is worked out over all the runs together, never as
+a median of each project's medians.

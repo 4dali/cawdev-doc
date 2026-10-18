@@ -15,9 +15,25 @@ status and input. This page is the key reference.
 | `L` (or `l`) | Open the run list — every session on this machine, live, claiming, or queued |
 | `g` | Toggle between the session's own transcript and the daemon's log |
 | `enter` (or `i`) | Start typing a prompt to the session you're watching |
-| `/` | Start typing a slash command |
+| `/` | Start typing a slash command. The list filters as you type and `tab` completes as far as the matches agree |
+| `a` | Answer the question the session stopped on, if it is yours |
+| `y` `s` `Y` `M` `n` | Decide a permission request ([below](#deciding-a-permission-request)) |
+| `x`, twice | Cancel the session you're watching |
+| `c` | Configure this machine ([below](#configuring-this-machine-without-leaving)) |
+| `d` | In advanced mode, list the planned cards and develop the one you pick |
+| `tab` / `shift+tab` | In advanced mode, move the focus between windows |
+| `esc` | Close whatever is open, without ending the session |
 | `q` | Quit — asks twice while sessions are running |
 | `ctrl+c` | Once: cancel whatever's open (a picker, a line). Twice: quit. |
+
+In a list, arrows move, `1`–`9` pick straight away, `enter` chooses and `esc`
+leaves. While typing, `↑` and `↓` walk what you typed before, kept across
+launches in `~/.cawdev/history.json`. A long paste stays one line
+(`[pasted, 342 lines]`) and all of it is sent.
+
+If the platform stops honouring your session (it expired, you signed out in the
+console, or your account went), the footer pins `session expired — /login to
+sign in again` and the terminal drops to watching only until `/login` succeeds.
 
 Quitting stops the daemon too — one word started it, one key stops it. Pass
 `--leave-running` when you launch `cawdev` to keep the daemon up after you
@@ -34,13 +50,17 @@ detach; then quitting only closes this window.
 | `/config` | This machine's config — same as `c` |
 | `/cancel` | Cancel the session you're watching |
 | `/log` | Toggle the daemon's own log — same as `g` |
-| `/advanced-mode` | One window per session around the prompt, for the projects you tick (`@slug` names them) — or back. See [Advanced mode](#advanced-mode). |
-| `/new` | Start a session here: `/new plan R3`, `/new dev R3`, `/new plan` or `/new dev <the task in words>`, `/new ask <question>` — `@project` picks which project |
-| `/develop` | Start development on the card a finished plan session was about |
-| `/pr` | Open the pull request of a finished session's branch |
+| `/advanced-mode` | One window per session around the prompt, for the projects you tick (`@slug` names them). Run it again, or `/advanced-mode off`, to leave. See [Advanced mode](#advanced-mode). |
+| `/new` | Start a run here: `/new plan R3`, `/new dev R3`, `/new plan` or `/new dev <the task in words>`, `/new ask <question>` — `@project` picks which project. `--claude`, `--codex` or `--agy` names the agent; `--anyway` starts it though the usage window is over its threshold |
+| `/card` | Write a card in Considering from the words after it, and start nothing — no run, no branch, nothing spent |
+| `/agent` | Which agent `/new` uses: `/agent claude\|codex\|agy`, `/agent default` to hand the choice back to the project, `/agent` alone to see it. See [Agents](/cli/agents/) |
+| `/develop` | Start development on the card a finished plan session was about, or one you name (`/develop R30`). Takes `--codex`, `--claude`, `--agy` and `--anyway` |
+| `/pr` | Open the pull request (or merge request) of a finished session's branch |
 | `/continue` | Pick a failed or stopped session back up on this machine — the console's *Carry on* |
 | `/projects` | Which projects advanced mode shows — tick one or several |
-| `/open` | Open the session's pull request in your browser |
+| `/refresh` | Read the cards and their statuses again now, rather than on the next 30-second tick |
+| `/open` | On a finished session, open its pull request in your browser. On a finished **plan**, open the card with its plan unfolded. On a session waiting for you, open its run page, where the question is |
+| `/view` | Read in the terminal: `/view R29` prints a card (status, branch, work item, pull request, the first thirty lines of its body), `/view <words of its title>` finds one, `/view card` is the focused session's own. Alone, it reads what a session is waiting on in full |
 | `/drop` | Delete the checkout a finished session was made on demand for |
 | `/close` | Close an ended session's window |
 | `/reload` | Quit and start again on the code on disk — the runner too, when nothing is running |
@@ -58,21 +78,33 @@ said while you were away folded in then. At most four windows are shown at
 once — the rest sit on a tab line below them.
 
 Above the windows, a strip draws the roadmap of every project this machine
-serves as a small board — Considering, Planned, In development and Merged as
-columns, one line per card, a `●` beside a card with a session running on it
-right now. `/projects` picks which projects the strip and the mode cover
-(`@slug` on any command names one directly). When there isn't room, a column
-folds to a count first (`merged 3 hidden`), then a whole project
-(`+3 projects`) — a project always keeps at least one column, and a card is
-never cut in half.
+serves as a small board. **Considering, Planned and In development** are the
+columns, one line per card, with a `●` beside a card that has a run on it right
+now. **Backlog, Merged, Shipped and Declined** are counts beside the project's
+name (`3 backlog · 1 merged · 2 shipped`), because work that is over only grows
+and the backlog would be the first column to go.
+
+Issues sit in the same columns: a NEW issue in Considering and a CONFIRMED one
+in Planned, first in the column and most severe first, so a `+N more` never
+hides a critical defect. When there isn't room, a column ends in `+N more`;
+then empty columns go, then whole columns (Considering first; In development
+stays longest), named in the header (`considering 3 hidden`); then projects
+(`+3 projects`). `/projects` picks which projects the strip and the mode cover
+(`@slug` on any command names one directly), and `/refresh` reads it again now.
+
+Each window's second line says which agent and model it is running (`Claude ·
+Opus 5.5`, `Codex · GPT-5-codex`), and a dev window adds the project and the
+path of the checkout it works in. A finished session that built nothing reads
+`finished · nothing built` in amber and offers a re-plan instead of `/pr`.
 
 From inside advanced mode:
 
 - **`/new plan R3`** or **`/new dev R3`** starts a plan or a coding session on
-  an existing card; **`/new plan <a sentence>`** or **`/new dev <a
-  sentence>`** files the card first and starts the session on it in one step;
-  **`/new ask <question>`** starts an ask session. `@project` says which
-  project when it isn't the only one shown.
+  an existing card; **`/new plan <a sentence>`** files the card first and plans
+  it; **`/new dev <a sentence>`** files the card, opens a work item on the
+  development board and a branch of its own, and develops it exactly as
+  `/new dev R12` would. **`/new ask <question>`** starts an ask session.
+  `@project` says which project when it isn't the only one shown.
 - **`/develop`** starts development on the card a finished plan session was
   about.
 - A session with no free checkout gets one **cloned on demand** instead of
@@ -112,9 +144,9 @@ you type.
 
 ## Deciding a permission request
 
-When a session stops to ask permission for something, four keys are on offer
-— never more than that, because a terminal has one key per idea and a grant
-that gets cut short mid-sentence is a promise nobody made:
+When a session stops to ask permission for something, five keys are on offer
+— no more, because a terminal has one key per idea and a grant that gets cut
+short mid-sentence is a promise nobody made:
 
 | Key | Grants | Lasts |
 |---|---|---|

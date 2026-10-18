@@ -15,8 +15,8 @@ skip:
 
 1. Branch off an up-to-date default branch, named after the entry (`r4-roadmap-entries`).
 2. **Move the entry to its in-development status naming the branch, before the first commit** — via `roadmap_set_status`, not after. The roadmap should be able to answer "what is being worked on right now" without asking anyone.
-3. Build to the entry's "Done when" list.
-4. Finish with a pull request. Never push straight to the default branch.
+3. Build to the entry's "Done when" list, and tick each item as you build and check it (`done_when_tick`, with one line of evidence). The reviewer ticks their own column separately and sees yours, so don't tick what you didn't check.
+4. **Commit and push before `report done`.** On a coding run the platform refuses `done` while anything is uncommitted or unpushed, and names it. Finish with a pull request. Never push straight to the default branch.
 5. When the PR merges, move the entry to `MERGED` naming it. The branch may then be deleted — the in-development status is for work somebody is doing, not work that's done.
 
 ## The body is what we want; the plan is how; the comments are the argument
@@ -61,6 +61,23 @@ run's own page in the console, and nine of them would fill the context this
 call exists to save. If you need that level of detail, the discussion under
 the entry is where a previous session should have written down what it
 learned, and where the current one should too.
+
+## Where a new card lands
+
+A card or issue you file with no status doesn't necessarily go on the board.
+Where it starts is the project's rule for cards an agent files, and the default
+is the **backlog**: it waits, in no sprint and on no board column, until a person
+or a sprint brings it in. Its origin names your run and the card the run was on.
+Name a status (`CONSIDERING`, `NEW`) when you mean the pipeline. Giving a
+backlog card a sprint brings it in at the first status of its kind.
+
+## Sprints belong to teams
+
+A sprint is a team's, not a project's. Opening, starting, completing and renaming
+one are a person's acts, and no tool does them. An agent can read the sprints
+(`sprint_list`) and file a card into an active or upcoming one with `sprint` on
+`roadmap_create` or `roadmap_update`. A completed sprint refuses a card, and
+only a person can reopen it, so when that refusal comes back, don't retry.
 
 ## There is no delete
 

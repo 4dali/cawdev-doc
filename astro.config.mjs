@@ -4,6 +4,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	// The Plan page became The Roadmap (chunk B deletes console/plan.md).
+	redirects: { '/console/plan/': '/console/roadmap/' },
 	integrations: [
 		starlight({
 			title: 'cawdev',
@@ -39,8 +41,11 @@ export default defineConfig({
 						{ label: 'Environment variables', slug: 'cli/environment-variables' },
 						{ label: 'The attached terminal', slug: 'cli/terminal-ui' },
 						{ label: 'The runner daemon', slug: 'cli/runner-daemon' },
+						{ label: 'Agents: Claude Code, Codex, Antigravity', slug: 'cli/agents' },
+						{ label: 'Git hosts: GitHub and GitLab', slug: 'cli/git-hosts' },
 						{ label: 'Lifecycle and stages', slug: 'cli/lifecycle-and-stages' },
 						{ label: 'Permissions and the shield', slug: 'cli/permissions-and-shield' },
+						{ label: 'Importing from Jira', slug: 'cli/jira-import' },
 						{ label: 'Troubleshooting', slug: 'cli/troubleshooting' },
 					],
 				},
@@ -58,17 +63,26 @@ export default defineConfig({
 						{ label: 'Tokens and authentication', slug: 'api/integration' },
 						{ label: 'Filing and reading cards', slug: 'api/calls' },
 						{ label: 'Webhooks', slug: 'api/webhooks' },
+						{ label: 'Git events from GitHub and GitLab', slug: 'api/git-events' },
 					],
 				},
 				{
 					label: 'Web console',
 					items: [
 						{ label: 'Finding your way around', slug: 'console/overview' },
-						{ label: 'Plan: Roadmap, Issues, Backlog, Sprints', slug: 'console/plan' },
-						{ label: 'Work: Development and Sessions', slug: 'console/work' },
-						{ label: 'Code: Git, Codemap, Changelog', slug: 'console/code' },
+						{ label: 'Live sessions and Waiting on you', slug: 'console/live-and-waiting' },
+						{ label: 'The Roadmap', slug: 'console/roadmap' },
+						{ label: 'A card', slug: 'console/card' },
+						{ label: 'Feedback', slug: 'console/feedback' },
+						{ label: 'Development, runs and insights', slug: 'console/work' },
+						{ label: 'Review, verdict and merge', slug: 'console/review-and-merge' },
+						{ label: 'Code: Quality, Git, Map, Changelog', slug: 'console/code' },
+						{ label: 'All projects', slug: 'console/portfolio' },
+						{ label: 'Teams and sprints', slug: 'console/teams' },
+						{ label: 'Sprints and the backlog', slug: 'console/team-backlog' },
+						{ label: 'Team access and privileges', slug: 'console/team-access' },
 						{ label: 'Project settings', slug: 'console/project-settings' },
-						{ label: 'Your account', slug: 'console/your-account' },
+						{ label: 'Your settings', slug: 'console/your-account' },
 						{ label: 'Administration', slug: 'console/administration' },
 						{ label: 'Generated exports', slug: 'console/exports' },
 					],

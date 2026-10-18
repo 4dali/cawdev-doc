@@ -55,6 +55,28 @@ session — and blocks until a person answers. See
 [the attached terminal](/cli/terminal-ui/#deciding-a-permission-request) for
 the four keys that decide it and exactly what each one writes down.
 
+### When nobody answers
+
+An unanswered request doesn't wait for ever by default. After the project's
+wait it **expires** and the run is told to carry on without it. The wait is set
+on **Project settings → Permissions**, under *When nobody answers*: fifteen
+minutes unless somebody changes it, up to a day, or *never*, in which case the
+run waits however long that is. A run waiting on a person is never swept, so a
+long wait costs the held checkout and nothing else.
+
+An expired request can still be allowed. The run page lists it under *Expired
+before anybody answered*, and *Allow now* grants it for the rest of that run and
+sends the run a message to try again. A plan waiting at a gate never expires.
+
+### Codex and Antigravity
+
+Tool rules, the ceiling and the permission prompt are Claude Code's grammar.
+**Codex and Antigravity bypass them**, along with the command half of the
+shield. They write only on a machine that has `acceptsRulesFromConsole` on and
+*Allow everything* ticked, and Codex reads inside a read-only sandbox. The
+half of the shield that takes a secret out of a result runs in the daemon and
+still applies to them. See [Agents](/cli/agents/).
+
 ## The shield
 
 Two things tool rules can't see: what a call actually returns, and where a
