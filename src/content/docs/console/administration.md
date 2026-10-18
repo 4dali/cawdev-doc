@@ -141,7 +141,7 @@ version is started again.
   version, and is offered the same way. The undo backup of the latest restore is
   never pruned.
 - **Not offered** for a backup of the version running now, for one older than
-  v1.0.12-beta (the first version that can record a restore; those are restored
+  v1.1.0 (the first version that can record a restore; those are restored
   by hand), or while an update is under way. The row says why.
 
 There is no code-only downgrade: an older API on a newer database would start,
@@ -159,7 +159,7 @@ docker compose pull updater && docker compose up -d updater
 **How many backups are kept.** `CAWDEV_BACKUPS_KEEP` in the updater's `.env`
 sets it; the default is 5.
 
-**Restoring by hand.** For a backup older than v1.0.12-beta, or should a restore
+**Restoring by hand.** For a backup older than v1.1.0, or should a restore
 itself fail, the backup files live in the updater's volume (named
 `<compose project>_updater-state`, under `backups/`) as gzipped SQL. Stop the
 API, empty the `public` schema, load the file into the database and start the API
