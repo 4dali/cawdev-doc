@@ -34,7 +34,7 @@ two groups of its own:
 | **Overview** | Waiting on you across the projects in view, **Live** (an orb for every run running), **Added up** (Roadmap, Issues, Development, Runs this week) and **The projects**, a table led by what needs you. Every number opens the page across projects it counts |
 | **Roadmap** | Every project's cards and issues on one board, one lane per project. `/portfolio/issues` opens it showing issues. See [The Roadmap](/console/roadmap/#one-roadmap-across-projects) |
 | **Feedback** | What is waiting to be triaged, project by project |
-| **Sprints** | Your teams' active sprints, and what is in none. See below |
+| **Sprints** | One team at a time: its Backlog and its sprints, as a list or a board. See below |
 | **Development** | Every open branch, a lane per project, with batch merges per project. See [Development](/console/work/#development) |
 | **Runs** | Every run in the projects in view, newest first, with the project's key on every row |
 | **Insights** | Each median is worked out over all the runs together, never a median of each project's medians |
@@ -69,10 +69,12 @@ project with the card open:
 | `/projects/<slug>/development` | `/portfolio/development?projects=<slug>` |
 | `/projects/<slug>/issues` | the Roadmap, `?projects=<slug>&kind=ISSUE` |
 | `/projects/<slug>/roadmap/R12`, `…/development/R12` | the card over the board, `?card=KEY-R12` |
+| A card's old graph link, `/projects/<slug>/roadmap/<n>/graph` | the card over the board, `?card=KEY-R12` |
 
 A card's own link, `/projects/<slug>/roadmap/R12`, is still what pushes, emails,
 SonarQube and the CLI write, and it keeps working. A branch's review page
-(`…/development/review/<id>`) and a card's graph are still pages of their own.
+(`…/development/review/<id>`) is still a page of its own. A card's old graph
+link opens the card over the board.
 
 ## Lanes per project
 
@@ -103,18 +105,16 @@ creates the card in the chosen project.
 You only ever see projects you are on. Naming a project you are not in shows
 nothing for it, and an administrator sees no more here than anybody else.
 
-## Sprints across teams
+## Sprints
 
-**All projects → Sprints** answers "which team's sprint". The row at the top is
-*Teams*: *All teams* and a chip for each team you are in (`?teams=`). Each team
-has one panel with its active sprint: the team, the sprint's name and ref
-(`S7`), when it ends, a progress bar, the goal, and its cards grouped by project
-with each ref written with its project's key. The panel's menu holds *Complete
-sprint…* and links to the sprint and the team. A team with no active sprint is a
-line under *Between sprints*.
+**All projects → Sprints** (`/portfolio/sprints`) is one page for **one team at
+a time**: the team's Backlog and its sprints, as a *List* or a *Board*. There is
+no separate *Active sprints* page and no separate backlog page any more;
+`/portfolio/sprints/backlog`, the old page's `?teams=` and `/teams/<id>/backlog`
+all land here. The *Team* row names each team with its active sprint (*Core
+S7*), and *Open {team}* opens the team's page. See [Sprints and the
+backlog](/console/team-backlog/) for the whole page.
 
-**Not in a sprint** lists the planned cards and confirmed issues of those teams'
-projects that are in no sprint. Drag one onto a team's panel to put it in that
-sprint. If the card's project is not shared with that team the page says so and
-moves nothing; a card you only read cannot be dragged. *New sprint* asks which
-team first. You see only the part of a sprint in projects you can see.
+A card is planned into a sprint only if its project is shared with the team; a
+card you only read cannot be moved. You see only the part of a sprint in
+projects you can see.

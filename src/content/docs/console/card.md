@@ -23,10 +23,24 @@ open.
 
 ## The header and the facts
 
-The header reads left to right: the way back, the card's key, its **status** as a
-large chip (press it to move the card; a status that needs something asks for it
-right there), its tags, then **Watch**, **Copy link**, **Open as a page** and
+The header reads left to right: the way back, the card's key, its status chips
+(see [Changing the status](#changing-the-status)), its tags, then **Watch**, **Copy link**, **Open as a page** and
 **More**.
+
+## Changing the status
+
+A card has two statuses and the header changes both.
+
+- **Roadmap status** is a button holding the pipeline's columns. Pick one to move
+  the card. *Merged*, *Declined* and *In development* ask for what they need
+  (a reason, a branch) in the same dialog a drag onto that column opens.
+- **Development status** appears when the card has a branch: *Ready*, *Coding*,
+  *Review*, *Done* and *Not done*. It is disabled, with the reason beside it,
+  while a session holds the branch, and *Done* and *Not done* are disabled
+  until the branch is in *Review*. They ask for the same things as the buttons
+  on the Development board; *Not done* needs a message.
+
+Someone who only reads the project sees the chips and no button.
 
 The facts sit beside the card, or in a **Details** fold under it when the card
 is narrower than 640px:

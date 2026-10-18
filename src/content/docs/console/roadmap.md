@@ -201,7 +201,3 @@ label, or the kind of run that filed it.
 
 On **Merged**, a pointer reads *Ready to release* and takes owners to the
 [Changelog](/console/code/#changelog). The board does not start a release.
-
-Open a card and its **graph** view draws what the rest of the corpus says about
-it, laid out in rings so the same graph always draws the same picture. It is
-computed fresh on every visit.

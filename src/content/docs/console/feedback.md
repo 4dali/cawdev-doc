@@ -61,7 +61,7 @@ An accepted item lands where the project's *feedback door* says: **In the
 backlog** by default, or on the board. See [Where a new card
 lands](/console/roadmap/#where-a-new-card-lands). Its source tags become the
 card's tags, and an accepted item links to what it became. A card in the backlog
-is planned into a sprint from the [team's Backlog page](/console/team-backlog/). Accepting says where the item went (*Feedback
+is planned into a sprint from the [team's Backlog](/console/team-backlog/). Accepting says where the item went (*Feedback
 accepted as R14, in the backlog*, with an **Open** button for the card; across
 projects the ref carries its project's key). An item is dealt
 with once: a second press is refused rather than filing a second permanent card.

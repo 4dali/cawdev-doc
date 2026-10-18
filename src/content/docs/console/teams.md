@@ -38,7 +38,7 @@ A team's page reads top to bottom:
 
 - **The head** names the team and offers the one filled button, **New sprint**
   (a toast says *S8 created* with an **Open** button for its page), and a
-  **Backlog** button for the [team backlog](/console/team-backlog/).
+  **Backlog** button for the [Sprints and the backlog](/console/team-backlog/).
 - **Team chips** switch team and end with a quiet *New team*.
 - **Active** — the one sprint being worked: its ref (`S7`), name, goal, dates,
   days left, how many cards are done, then its cards grouped by project.
@@ -97,8 +97,8 @@ pipeline on the way; taking a card to the Backlog takes it out of its sprint.
 Three ways to file one:
 
 1. The card's **Sprint** field (a select grouped by team).
-2. The sprint page's **Add cards…** dialog, or the [team
-   backlog](/console/team-backlog/).
+2. The sprint page's **Add cards…** dialog, or the [Sprints and
+   the backlog](/console/team-backlog/).
 3. From an agent or script: the `sprint` field, which takes `7`, `S7`,
    `"Core team · S7"`, a sprint id, or `""` to clear. See
    [Tool reference](/mcp/tools/).
@@ -124,7 +124,7 @@ Backlog card leaves the backlog on the way and lands New (Considering for a
 card). A row's menu has **Remove from sprint**. Adds and removes go together: if
 the server refuses one, it names it and nothing moves. If you only read a
 project you see its cards and nothing to change, and a Completed sprint changes
-no cards. The sprint page has a **Backlog** link to the [team
+no cards. The sprint page has a **Backlog** link to the [Sprints and the
 backlog](/console/team-backlog/).
 
 ### A branch per project
@@ -138,5 +138,6 @@ merge commit. See [Review, verdict and merge](/console/review-and-merge/).
 
 ### Sprints across teams
 
-`/portfolio/sprints` shows the sprints of all your teams side by side, under
-[All projects](/console/portfolio/).
+`/portfolio/sprints` is the team's sprints and Backlog on one page, a team at a
+time, under [All projects](/console/portfolio/). See [Sprints and the
+backlog](/console/team-backlog/).
