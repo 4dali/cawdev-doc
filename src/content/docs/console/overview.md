@@ -60,7 +60,7 @@ A 48px bar, left to right:
   requests and finished work waiting on you across every project, and the
   questions you have passed to a colleague. It opens over the page you are on
   as a side sheet (a full-height bottom sheet on a phone), with *Open as a
-  page* in its head. At zero it goes quiet and reads *Nothing waiting*. The
+  page* in its head. At zero it goes quiet and reads *No questions waiting*. The
   route is still `/inbox`. Everything about it is on
   [Live sessions and Waiting on you](/console/live-and-waiting/).
 - **Live**, the runs running right now in every project you can see, each with

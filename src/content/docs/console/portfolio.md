@@ -69,7 +69,7 @@ project with the card open:
 | `/projects/<slug>/development` | `/portfolio/development?projects=<slug>` |
 | `/projects/<slug>/issues` | the Roadmap, `?projects=<slug>&kind=ISSUE` |
 | `/projects/<slug>/roadmap/R12`, `…/development/R12` | the card over the board, `?card=KEY-R12` |
-| A card's old graph link, `/projects/<slug>/roadmap/<n>/graph` | the card over the board, `?card=KEY-R12` |
+| A card's old graph link, `/projects/<slug>/roadmap/<ref>/graph`, e.g. `/projects/dali-x/roadmap/R12/graph` | the card over the board, `?card=KEY-R12` |
 
 A card's own link, `/projects/<slug>/roadmap/R12`, is still what pushes, emails,
 SonarQube and the CLI write, and it keeps working. A branch's review page

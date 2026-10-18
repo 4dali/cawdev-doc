@@ -54,6 +54,10 @@ waiting for you, *Reading*, decided by you, decided by somebody else, and
 
 ### Reviews
 
+An agent's review row, the reviewer's report and the commits a run wrote carry
+the sparkle that [marks what an agent wrote](/console/card/#the-ai-mark); a
+review a person wrote has none.
+
 The **Reviews** box is one thread for the branch, newest first, whoever read it.
 While an agent reads it says *Claude is reading the branch…*, and when it
 finishes its report is a row (*Claude review · started by Moez · read in 4m*);

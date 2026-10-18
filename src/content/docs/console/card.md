@@ -160,14 +160,47 @@ stops proposing it again.
 
 - Anyone who can read the project reads the discussion; commenting needs the
   **Edit cards** privilege.
-- A comment written by an agent says so, and names the account whose token it
-  used.
+- A comment written by an agent carries the [AI mark](#the-ai-mark), which says
+  who wrote it.
 - `R12` links a card and `@name` tells somebody on the project. Everyone who
   **Watches** the card is told as well.
 - You can correct your own wording and the comment is marked as edited. Nobody
   can edit anybody else's, an administrator included. There is no delete.
 
 When a discussion reaches a conclusion, put it in the body.
+
+### History, and See more
+
+**Activity** also keeps the card's **history**, one line for each thing that
+happened to it. A line that has words behind it ends in **See more**, which
+opens the text under the line (**See less** folds it). That covers:
+
+- a Done or Not done verdict, with its note;
+- a review or a comment on the branch;
+- a decline, with its reason;
+- a closed branch, with its reason;
+- a Done-when tick, with its evidence or note.
+
+A long note folds again behind **Read it all**. An approval reads *marked it
+done*, and a sprint reads *added it to Core team · S7* or *took it out of Core
+team · S7*.
+
+## The AI mark
+
+A small sparkle marks anything a session or an agent token wrote. What a person
+wrote by hand has no mark. Hover or focus it to read who wrote it (*Planned by a
+session · Claude Code · plan run*, or *Written through the token ‘laptop’*); a
+session's sparkle is a link that opens that session. It sits on:
+
+- the plan, and each Done-when tick an agent made;
+- comments and history lines;
+- review rows and the reviewer's report, and the review page's commits (see
+  [Review, verdict and merge](/console/review-and-merge/#the-review-page));
+- a branch's tile on the [Development board](/console/work/#development);
+- the card's *filed by* line, and its tile on the Roadmap when an agent filed it.
+
+Writes made through your personal agent token outside a cawdev session are
+recorded too, since release R550. Rows from before that still read as the person.
 
 ## Moving a card
 

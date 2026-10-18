@@ -27,7 +27,8 @@ projects you can see are drawn, and a card stays in its own project.
 - **Projects** is a row of its own: *All projects* and a chip per project, when
   the backlog spans two or more.
 - **Show** is a separate switch, *Both | Cards | Issues*, so cards and issues are
-  never read as projects. A search over the ref, title or status sits with them.
+  never read as projects. A search over the ref, title or status sits with them. The counts in the
+  sprint heads and sections follow **Show**: under *Issues* they count issues only.
   The filters live in the address.
 
 ## List or Board

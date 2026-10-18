@@ -74,7 +74,7 @@ project's cards.
 
 ## Sprints
 
-Numbered inside the team, with a name, an optional goal and dates. States:
+Numbered inside the team, with a name, an optional goal and dates. A sprint reads as its ref and its name, *S2 sprint 2*. States:
 **Upcoming** (ordered), **Active** (at most one per team) and **Completed**.
 
 - Any member of the team opens, edits, reorders, starts, completes and reopens
