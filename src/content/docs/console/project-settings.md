@@ -178,6 +178,17 @@ or *directly · via Core team*. Only a *direct* row has a role select and a
 or ask the team's owner to take them out. See
 [Team access and privileges](/console/team-access/) for how the sources add up.
 
+**Adding someone.** An owner types their `@username` or their email address
+into the field under the list, picks the access and presses **Add**. As you
+type, the field suggests the people who already share a project or a team with
+you, by picture, name, @username and address; an exact username or address
+finds anyone else on the platform, and a prefix never does (there is no user
+directory to browse). Nothing picked is fine: what you typed goes through as it
+is, and an unknown name or address is refused in a sentence under the field.
+The same field adds people to a team, and the same two spellings work after
+`@` in a comment or a card's body: `@dali`, `@dali@example.com` or part of a
+name all find the person, and the pick writes `@username`.
+
 **Teams it is shared with.** One row per team, as `{access} · {source}`:
 
 | Row says | Means |

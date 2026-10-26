@@ -50,8 +50,9 @@ A team's page reads top to bottom:
 
 ## People
 
-An owner adds a person **by username** (there is no directory to browse),
-changes a role, removes someone, renames the team and archives it from the
+An owner adds a person **by @username or email address** (the field suggests
+the people who share a project or a team with you as you type; an exact
+username or address finds anyone else, a prefix never does), changes a role, removes someone, renames the team and archives it from the
 menu beside the head. The last owner cannot be demoted or removed and is not
 offered it. Anyone can **Leave team…** from their own row.
 
